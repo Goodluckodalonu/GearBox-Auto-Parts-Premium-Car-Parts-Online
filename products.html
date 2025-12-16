@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop All Products | GearBox Auto Parts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#f59e0b',
+                        'accent': '#dc2626',
+                        'light': '#f8fafc',
+                        'dark': '#0f172a'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation (Same as index.html) -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-dark">
+                        Gear<span class="text-primary">Box</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-dark hover:text-primary">Home</a>
+                    <a href="products.html" class="font-medium text-primary border-b-2 border-primary">Shop</a>
+                    <a href="index.html#categories" class="font-medium text-dark hover:text-primary">Categories</a>
+                    <a href="about.html" class="font-medium text-dark hover:text-primary">About</a>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <!-- Search Bar -->
+                    <div class="hidden md:block relative">
+                        <input type="text" id="search-input" 
+                               class="pl-10 pr-4 py-2 border rounded-full w-64 focus:outline-none focus:ring-2 focus:ring-primary"
+                               placeholder="Search products...">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    
+                    <!-- Cart -->
+                    <a href="cart.html" class="relative">
+                        <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+                        <span id="cart-count" class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </a>
+                    <a href="wishlist.html" class="relative">
+                      <i class="far fa-heart text-xl text-dark hover:text-accent"></i>
+                      <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                  </a>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Search & Menu -->
+            <div id="mobile-menu" class="md:hidden mt-4 hidden">
+                <div class="mb-4">
+                    <div class="relative">
+                        <input type="text" id="mobile-search" 
+                               class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                               placeholder="Search products...">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="flex flex-col space-y-3">
+                    <a href="index.html" class="font-medium py-2">Home</a>
+                    <a href="products.html" class="font-medium py-2 text-primary">Shop</a>
+                    <a href="index.html#categories" class="font-medium py-2">Categories</a>
+                    <a href="about.html" class="font-medium py-2">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-dark mb-2">Shop Auto Parts</h1>
+            <p class="text-gray-600">Premium quality parts for all makes and models</p>
+        </div>
+        
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Filters -->
+            <aside class="lg:w-1/4">
+                <div class="bg-white rounded-xl shadow-md p-6 sticky top-24">
+                    <!-- Filter Header -->
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">Filters</h2>
+                        <button id="clear-filters" class="text-sm text-accent hover:text-red-700">
+                            Clear All
+                        </button>
+                    </div>
+                    
+                    <!-- Category Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-3 flex items-center justify-between">
+                            <span>Category</span>
+                            <i class="fas fa-chevron-down text-sm"></i>
+                        </h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="category" value="all" class="category-filter mr-3 rounded text-primary focus:ring-primary" checked>
+                                <span>All Categories</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="category" value="engine" class="category-filter mr-3 rounded text-primary focus:ring-primary">
+                                <span>Engine Parts</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="category" value="brakes" class="category-filter mr-3 rounded text-primary focus:ring-primary">
+                                <span>Brake System</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="category" value="suspension" class="category-filter mr-3 rounded text-primary focus:ring-primary">
+                                <span>Suspension</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="category" value="electrical" class="category-filter mr-3 rounded text-primary focus:ring-primary">
+                                <span>Electrical</span>
+                            </label>
+                            <label class="flex items-center">
+                              <input type="checkbox" name="category" value="interior" class="category-filter mr-3 rounded text-primary focus:ring-primary">
+                              <span>Interior</span>
+                          </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Range Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-3">Price Range</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <input type="range" id="price-slider" min="0" max="1000" value="1000" 
+                                       class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                <div class="flex justify-between text-sm text-gray-600 mt-2">
+                                    <span>$0</span>
+                                    <span id="price-max">$1000+</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-1">
+                                    <label class="block text-sm text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="price-min" min="0" max="1000" value="0" 
+                                           class="w-full border rounded-lg px-3 py-2 text-sm">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="block text-sm text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="price-max-input" min="0" max="1000" value="1000" 
+                                           class="w-full border rounded-lg px-3 py-2 text-sm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Brand Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-3">Brand</h3>
+                        <div class="space-y-2 max-h-40 overflow-y-auto pr-2">
+                            <!-- Brands will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Rating Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-3">Rating</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="rating" value="5" class="rating-filter mr-3 rounded text-primary focus:ring-primary">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="text-gray-600 ml-2">& up</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="rating" value="4" class="rating-filter mr-3 rounded text-primary focus:ring-primary">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="text-gray-600 ml-2">& up</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="rating" value="3" class="rating-filter mr-3 rounded text-primary focus:ring-primary">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="text-gray-600 ml-2">& up</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- In Stock Filter -->
+                    <div class="mb-6">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="in-stock-filter" class="mr-3 rounded text-primary focus:ring-primary">
+                            <span class="font-medium">In Stock Only</span>
+                        </label>
+                    </div>
+                    
+                    <!-- Apply Filters Button -->
+                    <button id="apply-filters" class="w-full bg-primary text-white font-semibold py-3 rounded-lg hover:bg-blue-800 transition">
+                        Apply Filters
+                    </button>
+                </div>
+                
+                <!-- Active Filters -->
+                <div id="active-filters" class="mt-4 bg-white rounded-xl shadow-md p-4 hidden">
+                    <h3 class="font-semibold mb-2">Active Filters:</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <!-- Active filters will appear here -->
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Main Products Area -->
+            <div class="lg:w-3/4">
+                <!-- Toolbar -->
+                <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <!-- Results Count -->
+                        <div>
+                            <p id="results-count" class="font-medium">Loading products...</p>
+                        </div>
+                        
+                        <!-- Sort Options -->
+                        <div class="flex items-center space-x-4">
+                            <span class="text-gray-600">Sort by:</span>
+                            <select id="sort-options" class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="featured">Featured</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="rating">Highest Rated</option>
+                                <option value="name">Name A-Z</option>
+                            </select>
+
+                            <div class="flex items-center space-x-4">
+                              <span class="text-gray-600">Show:</span>
+                              <select id="per-page-select" class="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                                  <option value="8">8 per page</option>
+                                  <option value="12" selected>12 per page</option>
+                                  <option value="24">24 per page</option>
+                                  <option value="48">48 per page</option>
+                                  <option class="text-md" value="1000">Show All</option>
+                              </select>
+                            </div>
+                            
+                            <!-- View Toggle -->
+                            <div class="flex border rounded-lg overflow-hidden">
+                                <button class="view-toggle p-2 border-r bg-gray-100" data-view="grid">
+                                    <i class="fas fa-th"></i>
+                                </button>
+                                <button class="view-toggle p-2" data-view="list">
+                                    <i class="fas fa-list"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products Grid -->
+                <div id="products-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Skeleton Loading -->
+                    <div class="col-span-full">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="animate-pulse">
+                                <div class="bg-gray-300 h-64 rounded-lg mb-4"></div>
+                                <div class="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                                <div class="h-4 bg-gray-300 rounded w-1/2"></div>
+                            </div>
+                            <div class="animate-pulse">
+                                <div class="bg-gray-300 h-64 rounded-lg mb-4"></div>
+                                <div class="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                                <div class="h-4 bg-gray-300 rounded w-1/2"></div>
+                            </div>
+                            <div class="animate-pulse">
+                                <div class="bg-gray-300 h-64 rounded-lg mb-4"></div>
+                                <div class="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                                <div class="h-4 bg-gray-300 rounded w-1/2"></div>
+                            </div>
+                            <div class="animate-pulse">
+                              <div class="bg-gray-300 h-64 rounded-lg mb-4"></div>
+                              <div class="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                              <div class="h-4 bg-gray-300 rounded w-1/2"></div>
+                          </div>
+                          <div class="animate-pulse">
+                              <div class="bg-gray-300 h-64 rounded-lg mb-4"></div>
+                              <div class="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                              <div class="h-4 bg-gray-300 rounded w-1/2"></div>
+                          </div>
+                          <div class="animate-pulse">
+                              <div class="bg-gray-300 h-64 rounded-lg mb-4"></div>
+                              <div class="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                              <div class="h-4 bg-gray-300 rounded w-1/2"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Extra pagination -->
+<div id="pagination-container" class="mt-8 flex justify-center"></div>
+                
+                <!-- No Results Message -->
+                <div id="no-results" class="hidden text-center py-12">
+                    <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">No products found</h3>
+                    <p class="text-gray-600 mb-6">Try adjusting your filters or search term</p>
+                    <button id="reset-search" class="bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-800">
+                        Reset Filters
+                    </button>
+                </div>
+              
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12 mt-12">
+        <!-- Same footer as index.html -->
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-cogs text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+                    </div>
+                    <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2020.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white">Shop All</a></li>
+                        <li><a href="index.html#categories" class="text-gray-400 hover:text-white">Categories</a></li>
+                        <li><a href="cart.html" class="text-gray-400 hover:text-white">My Cart</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white">Shipping Policy</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-white">Returns</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-secondary"></i>
+                            123 Auto Street, Detroit, MI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-secondary"></i>
+                            (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-secondary"></i>
+                            support@gearbox.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 GearBox Auto Parts. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+    <script src="products-filter.js"></script>
+</body>
+</html>

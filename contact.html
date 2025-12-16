@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | GearBox Auto Parts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#f59e0b',
+                        'accent': '#dc2626',
+                        'light': '#f8fafc',
+                        'dark': '#0f172a'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Style for mobile menu -->
+    <style>
+        #mobileMenuContact {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        #mobileMenuContact.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        
+        #mobileMenuContact:not(.hidden) {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Contact form specific styles */
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-dark">
+                        Gear<span class="text-primary">Box</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-dark hover:text-primary transition">Home</a>
+                    <a href="products.html" class="font-medium text-dark hover:text-primary transition">Shop</a>
+                    <a href="about.html" class="font-medium text-dark hover:text-primary transition">About</a>
+                    <a href="contact.html" class="font-medium text-dark hover:text-primary border-b-2 border-primary transition">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex">
+                        <a href="#" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark transition duration-[.3s]">
+                            Community
+                        </a>
+                    </div>
+                    
+                    <!-- Cart & Wishlist Icons for mobile -->
+                    <div class="flex items-center space-x-4 md:hidden">
+                        <a href="cart.html" class="relative">
+                            <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+                            <span class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                        
+                        <a href="wishlist.html" class="relative">
+                            <i class="far fa-heart text-xl text-dark hover:text-accent"></i>
+                            <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtnContact" class="md:hidden text-2xl">
+                        <i id="menuIconContact" class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenuContact" class="md:hidden mt-4 hidden">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Home</a>
+                        <a href="products.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Shop</a>
+                        <a href="#categories" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Categories</a>
+                        <a href="about.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">About</a>
+                        <a href="contact.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Contact</a>
+                        <div class="pt-2 border-t">
+                            <a href="#" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition flex items-center">
+                                <i class="fas fa-users mr-2 text-primary"></i>
+                                Community
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-primary to-blue-800 rounded-2xl overflow-hidden mb-12">
+            <div class="px-8 py-16 md:px-16 md:py-24 text-white text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">Get in touch with our automotive experts for support, questions, or feedback</p>
+            </div>
+        </div>
+
+        <!-- Contact Grid -->
+        <div class="grid md:grid-cols-2 gap-12 mb-16">
+            <!-- Contact Information -->
+            <div>
+                <h2 class="text-3xl font-bold mb-8">Get in Touch</h2>
+                
+                <!-- Contact Cards -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2">Visit Our Store</h3>
+                                <p class="text-gray-600 mb-1">123 Auto Street</p>
+                                <p class="text-gray-600">Detroit, MI 48201</p>
+                                <p class="text-sm text-gray-500 mt-2">Open Monday-Friday: 9AM-6PM, Saturday: 10AM-4PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-phone-alt text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2">Call Us</h3>
+                                <p class="text-gray-600 mb-1">Sales & Orders: <span class="font-semibold">(555) 123-4567</span></p>
+                                <p class="text-gray-600">Technical Support: <span class="font-semibold">(555) 123-4568</span></p>
+                                <p class="text-sm text-gray-500 mt-2">Available Monday-Friday: 8AM-8PM EST</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2">Email Us</h3>
+                                <p class="text-gray-600 mb-1">General Inquiries: <a href="mailto:info@gearboxparts.com" class="text-primary hover:underline">info@gearboxparts.com</a></p>
+                                <p class="text-gray-600">Support: <a href="mailto:support@gearboxparts.com" class="text-primary hover:underline">support@gearboxparts.com</a></p>
+                                <p class="text-gray-600">Returns: <a href="mailto:returns@gearboxparts.com" class="text-primary hover:underline">returns@gearboxparts.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Media -->
+                <div class="mt-10">
+                    <h3 class="text-xl font-bold mb-4">Connect With Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-12 h-12 bg-dark text-white rounded-full flex items-center justify-center hover:bg-primary transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-dark text-white rounded-full flex items-center justify-center hover:bg-blue-400 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-dark text-white rounded-full flex items-center justify-center hover:bg-pink-600 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-dark text-white rounded-full flex items-center justify-center hover:bg-red-600 transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div>
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h2 class="text-3xl font-bold mb-6">Send a Message</h2>
+                    <p class="text-gray-600 mb-8">Fill out the form below and we'll get back to you within 24 hours.</p>
+                    
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:outline-none focus:border-primary">
+                            </div>
+                            <div>
+                                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:outline-none focus:border-primary">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                            <input type="email" id="email" name="email" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:outline-none focus:border-primary">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:outline-none focus:border-primary">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
+                            <select id="subject" name="subject" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:outline-none focus:border-primary">
+                                <option value="" disabled selected>Select a topic</option>
+                                <option value="order">Order Inquiry</option>
+                                <option value="shipping">Shipping & Delivery</option>
+                                <option value="returns">Returns & Exchanges</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="product">Product Questions</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message *</label>
+                            <textarea id="message" name="message" rows="5" required 
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input focus:outline-none focus:border-primary resize-none"></textarea>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="newsletter" name="newsletter" class="w-4 h-4 text-primary rounded">
+                            <label for="newsletter" class="ml-2 text-sm text-gray-700">Subscribe to our newsletter for updates and promotions</label>
+                        </div>
+                        
+                        <button type="submit" 
+                                class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-900 transition duration-300 transform hover:-translate-y-1">
+                            Send Message <i class="ml-2 fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    
+                    <!-- Form Success Message (hidden by default) -->
+                    <div id="formSuccess" class="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg hidden">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-600 text-xl mr-3"></i>
+                            <div>
+                                <h3 class="font-bold text-green-800">Message Sent Successfully!</h3>
+                                <p class="text-green-700">Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-50 transition">
+                            <span class="font-bold text-lg">What are your shipping times and costs?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-600">Standard shipping takes 3-5 business days and costs $9.99. Free shipping is available on all orders over $100. Express shipping (1-2 business days) is available for $19.99.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-50 transition">
+                            <span class="font-bold text-lg">What is your return policy?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-600">We offer a 30-day return policy on all unused items in original packaging. Returns are free for defective items. For change of mind returns, a restocking fee may apply. Contact our returns department at returns@gearboxparts.com to initiate a return.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-50 transition">
+                            <span class="font-bold text-lg">Do you offer technical installation support?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-600">Yes! Our ASE-certified technicians are available Monday-Friday 8AM-8PM EST to help with installation questions. You can reach our technical support team at (555) 123-4568 or support@gearboxparts.com.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-50 transition">
+                            <span class="font-bold text-lg">Can I check inventory at your physical store?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-600">Yes, you can call our Detroit store at (555) 123-4567 to check inventory for specific parts. Many items are available for same-day pickup if ordered before 2PM EST.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8">
+                    <p class="text-gray-600">Didn't find your answer? <a href="#contactForm" class="text-primary font-semibold hover:underline">Send us a message</a> or call our support line.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">Find Our Store</h2>
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <!-- Map Container -->
+                <div class="h-96 bg-gray-200 relative">
+                    <!-- You can replace this with an actual embedded Google Map -->
+                    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-map-marker-alt text-primary text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">GearBox Auto Parts Store</h3>
+                            <p class="text-gray-600">123 Auto Street, Detroit, MI 48201</p>
+                            <p class="text-sm text-gray-500 mt-4">[Embed Google Maps or other mapping service here]</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Map Info -->
+                <div class="p-8 grid md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-clock text-primary"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">Store Hours</h3>
+                        <p class="text-gray-600">Mon-Fri: 9AM-6PM</p>
+                        <p class="text-gray-600">Saturday: 10AM-4PM</p>
+                        <p class="text-gray-600">Sunday: Closed</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-parking text-primary"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">Parking</h3>
+                        <p class="text-gray-600">Free customer parking available</p>
+                        <p class="text-gray-600">10 spaces in front of store</p>
+                        <p class="text-gray-600">Additional street parking</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-tools text-primary"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">In-Store Services</h3>
+                        <p class="text-gray-600">Part installation available</p>
+                        <p class="text-gray-600">Technical consultations</p>
+                        <p class="text-gray-600">Vehicle compatibility checks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-cogs text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+                    </div>
+                    <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2020.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition">Shop All</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                      <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition">FAQs</a></li>
+                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white transition">Shipping Policy</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-white transition">Returns</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-secondary"></i>
+                            123 Auto Street, Detroit, MI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-secondary"></i>
+                            (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-secondary"></i>
+                            support@gearbox.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 GearBox Auto Parts. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle for contact page
+        const mobileMenuBtnContact = document.getElementById('mobileMenuBtnContact');
+        const mobileMenuContact = document.getElementById('mobileMenuContact');
+        const menuIconContact = document.getElementById('menuIconContact');
+        
+        if (mobileMenuBtnContact && mobileMenuContact) {
+            mobileMenuBtnContact.addEventListener('click', () => {
+                mobileMenuContact.classList.toggle('hidden');
+                if (menuIconContact) {
+                    if (mobileMenuContact.classList.contains('hidden')) {
+                        menuIconContact.className = 'fas fa-bars';
+                    } else {
+                        menuIconContact.className = 'fas fa-times';
+                    }
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!mobileMenuContact.contains(event.target) && 
+                    !mobileMenuBtnContact.contains(event.target) && 
+                    !mobileMenuContact.classList.contains('hidden')) {
+                    mobileMenuContact.classList.add('hidden');
+                    if (menuIconContact) {
+                        menuIconContact.className = 'fas fa-bars';
+                    }
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const mobileLinks = mobileMenuContact.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuContact.classList.add('hidden');
+                    if (menuIconContact) {
+                        menuIconContact.className = 'fas fa-bars';
+                    }
+                });
+            });
+        }
+
+        // Contact Form Submission
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('formSuccess');
+        
+        if (contactForm && formSuccess) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // In a real application, you would send the form data to a server here
+                // For demonstration, we'll just show the success message
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Show success message
+                formSuccess.classList.remove('hidden');
+                
+                // Scroll to success message
+                formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Hide success message after 10 seconds
+                setTimeout(() => {
+                    formSuccess.classList.add('hidden');
+                }, 10000);
+            });
+        }
+
+        // FAQ Accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                // Toggle answer visibility
+                answer.classList.toggle('hidden');
+                
+                // Rotate icon
+                if (answer.classList.contains('hidden')) {
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    icon.style.transform = 'rotate(180deg)';
+                }
+                
+                // Close other FAQ items (optional)
+                // faqQuestions.forEach(otherQuestion => {
+                //     if (otherQuestion !== question) {
+                //         const otherAnswer = otherQuestion.nextElementSibling;
+                //         const otherIcon = otherQuestion.querySelector('i');
+                //         otherAnswer.classList.add('hidden');
+                //         otherIcon.style.transform = 'rotate(0deg)';
+                //     }
+                // });
+            });
+        });
+
+        // Smooth scroll to form from FAQ link
+        const faqLink = document.querySelector('a[href="#contactForm"]');
+        if (faqLink && contactForm) {
+            faqLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                contactForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

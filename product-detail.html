@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | GearBox Auto Parts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#f59e0b',
+                        'accent': '#dc2626',
+                        'light': '#f8fafc',
+                        'dark': '#0f172a'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-dark">
+                        Gear<span class="text-primary">Box</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-dark hover:text-primary">Home</a>
+                    <a href="products.html" class="font-medium text-dark hover:text-primary">Shop</a>
+                    <a href="index.html#categories" class="font-medium text-dark hover:text-primary">Categories</a>
+                    <a href="#" class="font-medium text-dark hover:text-primary">About</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="cart.html" class="relative">
+                        <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+                        <span id="cart-count" class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </a>
+                    <a href="wishlist.html" class="relative">
+                      <i class="far fa-heart text-xl text-dark hover:text-accent"></i>
+                      <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                  </a>
+                    <button id="mobile-menu-btn" class="md:hidden text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden mt-4 hidden">
+                <div class="flex flex-col space-y-3">
+                    <a href="index.html" class="font-medium py-2">Home</a>
+                    <a href="products.html" class="font-medium py-2">Shop</a>
+                    <a href="index.html#categories" class="font-medium py-2">Categories</a>
+                    <a href="#" class="font-medium py-2">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="bg-white border-b">
+        <div class="container mx-auto px-4 py-3">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="index.html" class="inline-flex items-center text-sm text-gray-700 hover:text-primary">
+                            <i class="fas fa-home mr-2"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+                            <a href="products.html" class="ml-3 text-sm text-gray-700 hover:text-primary">Shop</a>
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+                            <span class="ml-3 text-sm font-medium text-gray-500">Product Details</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Product Details -->
+    <main class="container mx-auto px-4 py-8">
+        <div id="product-loading" class="text-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p class="text-gray-600">Loading product details...</p>
+        </div>
+        
+        <div id="product-details" class="hidden">
+            <!-- Product Info Section -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                <div class="flex flex-col lg:flex-row">
+                    <!-- Product Images -->
+                    <div class="lg:w-1/2 p-6">
+                        <div class="mb-4">
+                            <div id="main-image" class="relative rounded-lg overflow-hidden bg-gray-100">
+                                <img id="main-product-image" src="" alt="Product" 
+                                     class="w-full h-96 object-cover cursor-zoom-in">
+                                <button id="zoom-button" class="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full flex items-center justify-center transition">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Image Thumbnails -->
+                            <div id="image-thumbnails" class="flex space-x-3 mt-4 overflow-x-auto py-2">
+                                <!-- Thumbnails will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Share & Wishlist -->
+                        <div class="flex items-center justify-between border-t pt-4">
+                            <div class="flex items-center space-x-4">
+                                <span class="text-gray-600">Share:</span>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center hover:bg-blue-500">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#" class="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700">
+                                        <i class="fab fa-pinterest"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <button id="wishlist-btn" class="flex items-center text-gray-600 hover:text-accent">
+                                <i class="far fa-heart text-xl mr-2"></i>
+                                Add to Wishlist
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Info -->
+                    <div class="lg:w-1/2 p-6 border-l">
+                        <!-- Category & Brand -->
+                        <div class="flex items-center space-x-3 mb-4">
+                            <span id="product-category" class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">
+                                Engine Parts
+                            </span>
+                            <span id="product-brand" class="text-sm font-medium text-gray-600">
+                                Brand
+                            </span>
+                        </div>
+                        
+                        <!-- Product Name -->
+                        <h1 id="product-name" class="text-3xl font-bold text-dark mb-3">
+                            Performance Brake Pads
+                        </h1>
+                        
+                        <!-- Rating -->
+                        <div class="flex items-center mb-4">
+                            <div id="product-rating" class="flex text-yellow-400">
+                                <!-- Stars will be inserted here -->
+                            </div>
+                            <span id="product-reviews" class="text-gray-600 ml-2">(128 reviews)</span>
+                            <span class="mx-3 text-gray-300">|</span>
+                            <span id="product-stock" class="text-green-600 font-medium">
+                                <i class="fas fa-check-circle mr-1"></i> In Stock
+                            </span>
+                        </div>
+                        
+                        <!-- Price -->
+                        <div class="mb-6">
+                            <div class="flex items-center">
+                                <span id="product-price" class="text-4xl font-bold text-dark">$89.99</span>
+                                <span id="product-original-price" class="text-2xl text-gray-500 line-through ml-3">$109.99</span>
+                                <span id="product-discount" class="ml-3 bg-accent text-white text-sm font-bold px-3 py-1 rounded-full">
+                                    Save 18%
+                                </span>
+                            </div>
+                            <p class="text-gray-600 text-sm mt-2">Free shipping on orders over $100</p>
+                        </div>
+                        
+                        <!-- Description -->
+                        <div class="mb-6">
+                            <h3 class="font-bold text-lg mb-2">Description</h3>
+                            <p id="product-description" class="text-gray-700">
+                                High-performance ceramic brake pads for superior stopping power and reduced brake dust.
+                            </p>
+                        </div>
+                        
+                        <!-- Features -->
+                        <div class="mb-6">
+                            <h3 class="font-bold text-lg mb-2">Key Features</h3>
+                            <ul id="product-features" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <!-- Features will be loaded here -->
+                            </ul>
+                        </div>
+                        
+                        <!-- Add to Cart -->
+                        <div class="border-t pt-6">
+                            <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                                <!-- Quantity -->
+                                <div class="flex items-center">
+                                    <label class="mr-3 font-medium">Quantity:</label>
+                                    <div class="flex items-center border rounded-lg">
+                                        <button id="quantity-decrease" class="w-10 h-10 flex items-center justify-center hover:bg-gray-100">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <input type="number" id="quantity-input" min="1" value="1" 
+                                               class="w-16 text-center border-x py-2 focus:outline-none">
+                                        <button id="quantity-increase" class="w-10 h-10 flex items-center justify-center hover:bg-gray-100">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Buttons -->
+                                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+                                    <button id="add-to-cart-btn" class="bg-primary text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-800 transition flex items-center justify-center">
+                                        <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                                    </button>
+                                    <button id="buy-now-btn" class="bg-secondary text-dark font-semibold px-8 py-3 rounded-lg hover:bg-yellow-500 transition flex items-center justify-center">
+                                        <i class="fas fa-bolt mr-2"></i> Buy Now
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Guarantee -->
+                            <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shipping-fast text-primary text-xl mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Free Shipping</p>
+                                        <p class="text-sm text-gray-600">On orders over $100</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-undo-alt text-primary text-xl mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">30-Day Returns</p>
+                                        <p class="text-sm text-gray-600">Easy returns policy</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-shield-alt text-primary text-xl mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">2-Year Warranty</p>
+                                        <p class="text-sm text-gray-600">Manufacturer warranty</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tabs Section -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                <!-- Tab Headers -->
+                <div class="border-b">
+                    <nav class="flex overflow-x-auto">
+                        <button class="tab-btn active px-6 py-4 font-medium border-b-2 border-primary text-primary whitespace-nowrap" 
+                                data-tab="specifications">
+                            <i class="fas fa-list-alt mr-2"></i> Specifications
+                        </button>
+                        <button class="tab-btn px-6 py-4 font-medium text-gray-600 hover:text-primary whitespace-nowrap" 
+                                data-tab="reviews">
+                            <i class="fas fa-star mr-2"></i> Reviews <span id="review-count" class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full ml-1">128</span>
+                        </button>
+                        <button class="tab-btn px-6 py-4 font-medium text-gray-600 hover:text-primary whitespace-nowrap" 
+                                data-tab="shipping">
+                            <i class="fas fa-truck mr-2"></i> Shipping & Returns
+                        </button>
+                        <button class="tab-btn px-6 py-4 font-medium text-gray-600 hover:text-primary whitespace-nowrap" 
+                                data-tab="faq">
+                            <i class="fas fa-question-circle mr-2"></i> FAQ
+                        </button>
+                    </nav>
+                </div>
+                
+                <!-- Tab Contents -->
+                <div class="p-6">
+                    <!-- Specifications Tab -->
+                    <div id="specifications-tab" class="tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="font-bold text-lg mb-4">Product Specifications</h3>
+                                <div id="product-specs" class="space-y-3">
+                                    <!-- Specifications will be loaded here -->
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-4">Compatibility</h3>
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <p class="text-gray-700 mb-3">This product is compatible with:</p>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center">
+                                            <i class="fas fa-check text-green-600 mr-2"></i>
+                                            <span>All modern vehicles (2010+)</span>
+                                        </li>
+                                        <li class="flex items-center">
+                                            <i class="fas fa-check text-green-600 mr-2"></i>
+                                            <span>Both front and rear applications</span>
+                                        </li>
+                                        <li class="flex items-center">
+                                            <i class="fas fa-check text-green-600 mr-2"></i>
+                                            <span>OE replacement for most models</span>
+                                        </li>
+                                    </ul>
+                                    <button class="mt-4 text-primary font-medium hover:underline">
+                                        <i class="fas fa-download mr-1"></i> Download Compatibility Chart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reviews Tab -->
+                    <div id="reviews-tab" class="tab-content hidden">
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            <!-- Review Summary -->
+                            <div class="lg:w-1/3">
+                                <div class="bg-gray-50 rounded-xl p-6">
+                                    <h3 class="font-bold text-xl mb-4">Customer Reviews</h3>
+                                    <div class="flex items-center mb-4">
+                                        <div id="overall-rating" class="text-5xl font-bold mr-4">4.5</div>
+                                        <div>
+                                            <div id="overall-stars" class="flex text-yellow-400 mb-1">
+                                                <!-- Stars will be inserted here -->
+                                            </div>
+                                            <p class="text-gray-600">Based on <span id="total-reviews">128</span> reviews</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Rating Breakdown -->
+                                    <div class="space-y-2">
+                                        <div class="flex items-center">
+                                            <span class="w-10 text-sm">5 stars</span>
+                                            <div class="flex-1 h-2 bg-gray-200 rounded-full mx-3 overflow-hidden">
+                                                <div class="h-full bg-yellow-400 rounded-full" style="width: 65%"></div>
+                                            </div>
+                                            <span class="w-10 text-sm">65%</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="w-10 text-sm">4 stars</span>
+                                            <div class="flex-1 h-2 bg-gray-200 rounded-full mx-3 overflow-hidden">
+                                                <div class="h-full bg-yellow-400 rounded-full" style="width: 20%"></div>
+                                            </div>
+                                            <span class="w-10 text-sm">20%</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="w-10 text-sm">3 stars</span>
+                                            <div class="flex-1 h-2 bg-gray-200 rounded-full mx-3 overflow-hidden">
+                                                <div class="h-full bg-yellow-400 rounded-full" style="width: 10%"></div>
+                                            </div>
+                                            <span class="w-10 text-sm">10%</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="w-10 text-sm">2 stars</span>
+                                            <div class="flex-1 h-2 bg-gray-200 rounded-full mx-3 overflow-hidden">
+                                                <div class="h-full bg-yellow-400 rounded-full" style="width: 3%"></div>
+                                            </div>
+                                            <span class="w-10 text-sm">3%</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="w-10 text-sm">1 star</span>
+                                            <div class="flex-1 h-2 bg-gray-200 rounded-full mx-3 overflow-hidden">
+                                                <div class="h-full bg-yellow-400 rounded-full" style="width: 2%"></div>
+                                            </div>
+                                            <span class="w-10 text-sm">2%</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <button id="write-review-btn" class="w-full mt-6 bg-primary text-white font-semibold py-3 rounded-lg hover:bg-blue-800">
+                                        Write a Review
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Reviews List -->
+                            <div class="lg:w-2/3">
+                                <div class="mb-6">
+                                    <h4 class="font-bold text-lg mb-4">Recent Reviews</h4>
+                                    <div id="reviews-list" class="space-y-6">
+                                        <!-- Reviews will be loaded here -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Load More -->
+                                <div class="text-center">
+                                    <button class="border border-primary text-primary font-medium px-6 py-2 rounded-lg hover:bg-primary hover:text-white transition">
+                                        Load More Reviews
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shipping Tab -->
+                    <div id="shipping-tab" class="tab-content hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="font-bold text-lg mb-4">Shipping Information</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-shipping-fast text-primary text-xl mr-3 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-medium mb-1">Standard Shipping</h4>
+                                            <p class="text-gray-600">3-5 business days • Free on orders over $100</p>
+                                            <p class="text-sm text-gray-500">$9.99 for orders under $100</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i class="fas fa-rocket text-primary text-xl mr-3 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-medium mb-1">Express Shipping</h4>
+                                            <p class="text-gray-600">1-2 business days • $19.99</p>
+                                            <p class="text-sm text-gray-500">Order before 2PM for same-day dispatch</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i class="fas fa-store text-primary text-xl mr-3 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-medium mb-1">Store Pickup</h4>
+                                            <p class="text-gray-600">Available at all GearBox locations</p>
+                                            <p class="text-sm text-gray-500">Ready in 1 hour • Free</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-4">Return Policy</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-undo-alt text-primary text-xl mr-3 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-medium mb-1">30-Day Returns</h4>
+                                            <p class="text-gray-600">Full refund within 30 days of purchase</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i class="fas fa-box text-primary text-xl mr-3 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-medium mb-1">Easy Returns</h4>
+                                            <p class="text-gray-600">Print return label and drop off at any carrier</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i class="fas fa-ban text-primary text-xl mr-3 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-medium mb-1">Non-Returnable Items</h4>
+                                            <p class="text-gray-600">Opened electrical items, custom orders, and clearance items</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Tab -->
+                    <div id="faq-tab" class="tab-content hidden">
+                        <div class="space-y-4">
+                            <div class="border rounded-lg overflow-hidden">
+                                <button class="faq-question w-full text-left px-6 py-4 font-medium bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                                    <span>Is this product compatible with my vehicle?</span>
+                                    <i class="fas fa-chevron-down transition-transform"></i>
+                                </button>
+                                <div class="faq-answer px-6 py-4 hidden">
+                                    <p class="text-gray-700">Yes, this product is designed as a direct OE replacement for most modern vehicles (2010+). You can check specific compatibility using our online tool or contact our support team with your vehicle's VIN.</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-lg overflow-hidden">
+                                <button class="faq-question w-full text-left px-6 py-4 font-medium bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                                    <span>What's included in the package?</span>
+                                    <i class="fas fa-chevron-down transition-transform"></i>
+                                </button>
+                                <div class="faq-answer px-6 py-4 hidden">
+                                    <p class="text-gray-700">Each package includes the complete set of brake pads, all necessary hardware (clips, shims, etc.), and detailed installation instructions. Some packages may also include wear sensors where applicable.</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-lg overflow-hidden">
+                                <button class="faq-question w-full text-left px-6 py-4 font-medium bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                                    <span>What is the warranty period?</span>
+                                    <i class="fas fa-chevron-down transition-transform"></i>
+                                </button>
+                                <div class="faq-answer px-6 py-4 hidden">
+                                    <p class="text-gray-700">All our performance brake pads come with a 2-year unlimited mileage warranty against manufacturing defects. The warranty covers replacement of the product but not installation labor.</p>
+                                </div>
+                            </div>
+                            <div class="border rounded-lg overflow-hidden">
+                                <button class="faq-question w-full text-left px-6 py-4 font-medium bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                                    <span>How do I install this product?</span>
+                                    <i class="fas fa-chevron-down transition-transform"></i>
+                                </button>
+                                <div class="faq-answer px-6 py-4 hidden">
+                                    <p class="text-gray-700">We recommend professional installation by a certified mechanic. However, for experienced DIYers, we provide detailed installation guides and video tutorials on our website. Basic tools required include jack stands, lug wrench, C-clamp, and socket set.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Related Products -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-dark">Related Products</h2>
+                    <a href="products.html" class="text-primary font-medium hover:underline">
+                        View All <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                <div id="related-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Related products will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Recently Viewed -->
+            <div>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-dark">Recently Viewed</h2>
+                    <button id="clear-recently-viewed" class="text-sm text-gray-600 hover:text-primary">
+                        Clear History
+                    </button>
+                </div>
+                <div id="recently-viewed" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Recently viewed products will be loaded here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Not Found -->
+        <div id="product-not-found" class="hidden text-center py-12">
+            <i class="fas fa-exclamation-triangle text-6xl text-gray-300 mb-4"></i>
+            <h2 class="text-2xl font-bold mb-2">Product Not Found</h2>
+            <p class="text-gray-600 mb-6">The product you're looking for doesn't exist or has been removed.</p>
+            <a href="products.html" class="inline-block bg-primary text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-800">
+                Continue Shopping
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-cogs text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+                    </div>
+                    <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2020.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white">Shop All</a></li>
+                        <li><a href="index.html#categories" class="text-gray-400 hover:text-white">Categories</a></li>
+                        <li><a href="cart.html" class="text-gray-400 hover:text-white">My Cart</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Shipping Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Returns</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-secondary"></i>
+                            123 Auto Street, Detroit, MI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-secondary"></i>
+                            (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-secondary"></i>
+                            support@gearbox.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 GearBox Auto Parts. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+    <script src="product-detail.js"></script>
+</body>
+</html>

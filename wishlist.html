@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist | GearBox Auto Parts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#f59e0b',
+                        'accent': '#dc2626',
+                        'light': '#f8fafc',
+                        'dark': '#0f172a'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-dark">
+                        Gear<span class="text-primary">Box</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-dark hover:text-primary">Home</a>
+                    <a href="products.html" class="font-medium text-dark hover:text-primary">Shop</a>
+                    <a href="cart.html" class="font-medium text-dark hover:text-primary">Cart</a>
+                    <a href="wishlist.html" class="font-medium text-accent border-b-2 border-accent">Wishlist</a>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <!-- Wishlist Icon -->
+                     <!-- Cart Icon -->
+                     <a href="cart.html" class="relative">
+                      <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+                      <span class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                  </a>
+                    <a href="wishlist.html" class="relative">
+                        <i class="fas fa-heart text-xl text-accent"></i>
+                        <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </a>
+                    
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-dark mb-2">My Wishlist</h1>
+            <p class="text-gray-600">Save items you love for later</p>
+        </div>
+        
+        <!-- Empty Wishlist State -->
+        <div id="empty-wishlist" class="hidden text-center py-12">
+            <i class="far fa-heart text-6xl text-gray-300 mb-4"></i>
+            <h2 class="text-2xl font-bold mb-2">Your wishlist is empty</h2>
+            <p class="text-gray-600 mb-6">Save products you're interested in by clicking the heart icon.</p>
+            <a href="products.html" class="inline-block bg-primary text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-800">
+                <i class="fas fa-shopping-bag mr-2"></i> Browse Products
+            </a>
+        </div>
+        
+        <!-- Wishlist Items -->
+        <div id="wishlist-items" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Wishlist items will be loaded here -->
+        </div>
+        
+        <!-- Wishlist Actions -->
+        <div id="wishlist-actions" class="mt-8 hidden">
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <p id="wishlist-count" class="font-medium">0 items in wishlist</p>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button id="clear-wishlist" class="border border-accent text-accent font-semibold px-6 py-2 rounded-lg hover:bg-accent hover:text-white transition">
+                            <i class="fas fa-trash mr-2"></i> Clear Wishlist
+                        </button>
+                        <button id="add-all-to-cart" class="bg-primary text-white font-semibold px-6 py-2 rounded-lg hover:bg-blue-800 transition">
+                            <i class="fas fa-cart-plus mr-2"></i> Add All to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12 mt-12">
+        <!-- Same footer as other pages -->
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-cogs text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+                    </div>
+                    <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2024.</p>
+                </div>
+                
+                <!-- Add other footer columns -->
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 GearBox Auto Parts. All rights reserved. | Portfolio Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+    <script src="wishlist.js"></script>
+</body>
+</html>

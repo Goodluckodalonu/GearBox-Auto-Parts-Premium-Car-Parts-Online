@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Order | GearBox Auto Parts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#f59e0b',
+                        'accent': '#dc2626',
+                        'light': '#f8fafc',
+                        'dark': '#0f172a'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Style for tracking page -->
+    <style>
+        #mobileMenuTrack {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        #mobileMenuTrack.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        
+        #mobileMenuTrack:not(.hidden) {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Progress bar styling */
+        .tracking-progress-bar {
+            height: 6px;
+            background-color: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .tracking-progress-fill {
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Status timeline */
+        .status-timeline {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .status-timeline:before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #e5e7eb;
+        }
+        
+        .status-timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .status-timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .status-dot {
+            position: absolute;
+            left: -2.5rem;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #e5e7eb;
+        }
+        
+        .status-dot.completed {
+            box-shadow: 0 0 0 2px #10b981;
+            background-color: #10b981;
+        }
+        
+        .status-dot.active {
+            box-shadow: 0 0 0 2px #3b82f6;
+            background-color: #3b82f6;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+        
+        .status-dot.pending {
+            box-shadow: 0 0 0 2px #e5e7eb;
+            background-color: white;
+        }
+        
+        /* Tracking card hover */
+        .tracking-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .tracking-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Map placeholder */
+        .map-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-placeholder:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(90deg, transparent 50%, rgba(255,255,255,.1) 50%),
+                linear-gradient(transparent 50%, rgba(255,255,255,.1) 50%);
+            background-size: 50px 50px;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-dark">
+                        Gear<span class="text-primary">Box</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-dark hover:text-primary transition">Home</a>
+                    <a href="products.html" class="font-medium text-dark hover:text-primary transition">Shop</a>
+                    <a href="about.html" class="font-medium text-dark hover:text-primary transition">About</a>
+                    <a href="contact.html" class="font-medium text-dark hover:text-primary transition">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex">
+                        <a href="#" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark transition duration-[.3s]">
+                            Community
+                        </a>
+                    </div>
+                    
+                    <!-- Cart & Wishlist Icons for mobile -->
+                    <div class="flex items-center space-x-4 md:hidden">
+                        <a href="cart.html" class="relative">
+                            <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+                            <span class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                        
+                        <a href="wishlist.html" class="relative">
+                            <i class="far fa-heart text-xl text-dark hover:text-accent"></i>
+                            <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtnTrack" class="md:hidden text-2xl">
+                        <i id="menuIconTrack" class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenuTrack" class="md:hidden mt-4 hidden">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Home</a>
+                        <a href="products.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Shop</a>
+                        <a href="#categories" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Categories</a>
+                        <a href="about.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">About</a>
+                        <a href="contact.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Contact</a>
+                        <div class="pt-2 border-t">
+                            <a href="#" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition flex items-center">
+                                <i class="fas fa-users mr-2 text-primary"></i>
+                                Community
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-primary to-blue-800 rounded-2xl overflow-hidden mb-12">
+            <div class="px-8 py-16 md:px-16 md:py-24 text-white text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Track Your Order</h1>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">Real-time tracking for your GearBox Auto Parts delivery</p>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-12">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-shipping-fast text-primary text-3xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-4">Find Your Order Status</h2>
+                    <p class="text-gray-600">Enter your order number and email address to track your shipment</p>
+                </div>
+                
+                <!-- Tracking Form -->
+                <div class="max-w-2xl mx-auto">
+                    <form id="trackingForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="orderNumber" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Order Number <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-hashtag text-gray-400"></i>
+                                    </div>
+                                    <input type="text" id="orderNumber" name="orderNumber" required 
+                                           placeholder="e.g., GB-2025-12345"
+                                           class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2">Find this in your order confirmation email</p>
+                            </div>
+                            
+                            <div>
+                                <label for="trackingEmail" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Email Address <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-envelope text-gray-400"></i>
+                                    </div>
+                                    <input type="email" id="trackingEmail" name="trackingEmail" required 
+                                           placeholder="your.email@example.com"
+                                           class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2">Use the email associated with your order</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button type="submit" 
+                                    class="bg-primary text-white font-bold px-8 py-3 rounded-lg hover:bg-blue-900 transition transform hover:-translate-y-1 flex items-center justify-center">
+                                <i class="fas fa-search mr-2"></i>
+                                Track Order
+                            </button>
+                            <button type="button" id="findOrderBtn"
+                                    class="bg-gray-200 text-gray-800 font-bold px-8 py-3 rounded-lg hover:bg-gray-300 transition flex items-center justify-center">
+                                <i class="fas fa-question-circle mr-2"></i>
+                                Find My Order Number
+                            </button>
+                        </div>
+                        
+                        <div class="text-center">
+                            <p class="text-sm text-gray-600">
+                                Don't have an account? 
+                                <a href="#" id="guestTrackLink" class="text-primary font-semibold hover:underline">Track as guest</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Help Links -->
+                <div class="mt-10 pt-8 border-t">
+                    <h3 class="text-lg font-bold mb-4 text-center">Need Help Tracking?</h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <a href="faq.html#shipping" class="text-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                            <i class="fas fa-question-circle text-primary text-xl mb-2"></i>
+                            <p class="font-medium">Tracking FAQ</p>
+                        </a>
+                        <a href="contact.html" class="text-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                            <i class="fas fa-headset text-primary text-xl mb-2"></i>
+                            <p class="font-medium">Contact Support</p>
+                        </a>
+                        <a href="shipping.html" class="text-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                            <i class="fas fa-shipping-fast text-primary text-xl mb-2"></i>
+                            <p class="font-medium">Shipping Info</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Tracking Results (Initially Hidden) -->
+        <div id="trackingResults" class="hidden">
+            <!-- Order Summary -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">Order <span id="demoOrderNumber" class="text-primary">GB-2025-12345</span></h2>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-semibold rounded-full">
+                                <i class="fas fa-shipping-fast mr-1"></i> In Transit
+                            </span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-semibold rounded-full">
+                                <i class="fas fa-box mr-1"></i> 3 Items
+                            </span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 text-sm font-semibold rounded-full">
+                                <i class="fas fa-credit-card mr-1"></i> Paid
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <button id="printTracking" class="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition mr-3">
+                            <i class="fas fa-print mr-2"></i> Print
+                        </button>
+                        <button id="shareTracking" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition">
+                            <i class="fas fa-share-alt mr-2"></i> Share
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Order Details -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600 mb-1">Order Date</p>
+                        <p class="font-bold" id="demoOrderDate">Dec 15, 2025</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600 mb-1">Estimated Delivery</p>
+                        <p class="font-bold text-green-600" id="demoDeliveryDate">Dec 18, 2025</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600 mb-1">Shipping Method</p>
+                        <p class="font-bold" id="demoShippingMethod">UPS Ground</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600 mb-1">Tracking Number</p>
+                        <p class="font-bold" id="demoTrackingNumber">1Z999AA1234567890</p>
+                        <button class="text-primary text-sm font-semibold hover:underline mt-1" onclick="copyTrackingNumber(this)">
+                            <i class="far fa-copy mr-1"></i> Copy
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="mb-8">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm font-medium">Delivery Progress</span>
+                        <span class="text-sm font-medium" id="progressPercent">60%</span>
+                    </div>
+                    <div class="tracking-progress-bar">
+                        <div id="progressFill" class="tracking-progress-fill bg-primary" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tracking Timeline & Map -->
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                <!-- Timeline -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 tracking-card">
+                        <h3 class="text-xl font-bold mb-6">Shipping Timeline</h3>
+                        
+                        <div class="status-timeline">
+                            <!-- Status 1: Ordered -->
+                            <div class="status-timeline-item">
+                                <div class="status-dot completed"></div>
+                                <div>
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Order Placed</h4>
+                                            <p class="text-gray-600">Your order has been received</p>
+                                        </div>
+                                        <span class="text-sm text-gray-500">Dec 15, 8:30 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Status 2: Processed -->
+                            <div class="status-timeline-item">
+                                <div class="status-dot completed"></div>
+                                <div>
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Order Processed</h4>
+                                            <p class="text-gray-600">Items picked and packaged</p>
+                                        </div>
+                                        <span class="text-sm text-gray-500">Dec 15, 4:15 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Status 3: Shipped -->
+                            <div class="status-timeline-item">
+                                <div class="status-dot completed"></div>
+                                <div>
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Shipped</h4>
+                                            <p class="text-gray-600">Package left our facility</p>
+                                        </div>
+                                        <span class="text-sm text-gray-500">Dec 16, 10:45 AM</span>
+                                    </div>
+                                    <div class="mt-2 text-sm text-gray-600">
+                                        <i class="fas fa-map-marker-alt mr-1"></i>
+                                        Detroit, MI → Louisville, KY
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Status 4: In Transit -->
+                            <div class="status-timeline-item">
+                                <div class="status-dot active"></div>
+                                <div>
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">In Transit</h4>
+                                            <p class="text-gray-600">Package is on the way</p>
+                                        </div>
+                                        <span class="text-sm text-gray-500">Dec 16, 6:30 PM</span>
+                                    </div>
+                                    <div class="mt-2 text-sm text-gray-600">
+                                        <i class="fas fa-truck mr-1"></i>
+                                        Last scanned in Louisville, KY
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Status 5: Out for Delivery -->
+                            <div class="status-timeline-item">
+                                <div class="status-dot pending"></div>
+                                <div>
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Out for Delivery</h4>
+                                            <p class="text-gray-600">Package loaded on delivery vehicle</p>
+                                        </div>
+                                        <span class="text-sm text-gray-500">Estimated: Dec 18</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Status 6: Delivered -->
+                            <div class="status-timeline-item">
+                                <div class="status-dot pending"></div>
+                                <div>
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Delivered</h4>
+                                            <p class="text-gray-600">Package delivered to your address</p>
+                                        </div>
+                                        <span class="text-sm text-gray-500">Estimated: Dec 18</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Latest Update -->
+                        <div class="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fas fa-info-circle text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-blue-900 mb-1">Latest Update</h4>
+                                    <p class="text-blue-800">
+                                        Package departed from UPS facility in Louisville, KY at 6:30 PM on December 16. Next scheduled scan in Chicago, IL.
+                                    </p>
+                                    <p class="text-sm text-blue-700 mt-2">
+                                        <i class="far fa-clock mr-1"></i>
+                                        Updated 2 hours ago
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Map & Details -->
+                <div class="space-y-8">
+                    <!-- Map -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden tracking-card">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4">Delivery Route</h3>
+                            <div class="h-64 map-placeholder rounded-lg mb-4 relative">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="text-center text-white p-4">
+                                        <i class="fas fa-map-marked-alt text-4xl mb-3"></i>
+                                        <p class="font-bold">Live Delivery Map</p>
+                                        <p class="text-sm opacity-90 mt-1">
+                                          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d188705.35612700938!2d-83.26392595294406!3d42.35273073038382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8824ca0110cb1d75%3A0x5776864e35b9c4d2!2sDetroit%2C%20MI%2C%20USA!5e0!3m2!1sen!2sng!4v1765877077773!5m2!1sen!2sng" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between text-sm text-gray-600">
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 bg-primary rounded-full mr-2"></div>
+                                    <span>Detroit, MI (Origin)</span>
+                                </div>
+                                <i class="fas fa-arrow-right text-gray-400"></i>
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                                    <span>Chicago, IL (Destination)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carrier Info -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 tracking-card">
+                        <h3 class="text-xl font-bold mb-4">Carrier Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fab fa-ups text-orange-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold">UPS Ground</p>
+                                        <p class="text-sm text-gray-600">Tracking: 1Z999AA1234567890</p>
+                                    </div>
+                                </div>
+                                <a href="https://www.ups.com/track" target="_blank" class="text-primary font-semibold hover:underline">
+                                    View on UPS
+                                </a>
+                            </div>
+                            
+                            <div class="border-t pt-4">
+                                <h4 class="font-bold mb-2">Delivery Instructions</h4>
+                                <div class="flex items-start mb-3">
+                                    <i class="fas fa-home text-gray-400 mr-2 mt-1"></i>
+                                    <div>
+                                        <p class="font-medium">Front Door Delivery</p>
+                                        <p class="text-sm text-gray-600">Leave package at front door if no one answers</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <i class="fas fa-user text-gray-400 mr-2 mt-1"></i>
+                                    <div>
+                                        <p class="font-medium">Signature Required</p>
+                                        <p class="text-sm text-gray-600">Indirect signature - anyone at address can sign</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Items -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-12 tracking-card">
+                <h3 class="text-xl font-bold mb-6">Order Details</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-3 px-4 font-semibold">Product</th>
+                                <th class="text-left py-3 px-4 font-semibold">Status</th>
+                                <th class="text-left py-3 px-4 font-semibold">Quantity</th>
+                                <th class="text-left py-3 px-4 font-semibold">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center">
+                                        <div class="w-16 h-16 bg-gray-200 rounded-lg mr-4"></div>
+                                        <div>
+                                            <p class="font-bold">Performance Brake Pad Set</p>
+                                            <p class="text-sm text-gray-600">Part #GB-BP-2023</p>
+                                            <p class="text-sm text-gray-500">Front, Ceramic</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-semibold rounded-full">
+                                        Shipped
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4">1</td>
+                                <td class="py-4 px-4 font-bold">$89.99</td>
+                            </tr>
+                            
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center">
+                                        <div class="w-16 h-16 bg-gray-200 rounded-lg mr-4"></div>
+                                        <div>
+                                            <p class="font-bold">High-Flow Air Filter</p>
+                                            <p class="text-sm text-gray-600">Part #GB-AF-456</p>
+                                            <p class="text-sm text-gray-500">Washable, Performance</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-semibold rounded-full">
+                                        Shipped
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4">1</td>
+                                <td class="py-4 px-4 font-bold">$42.50</td>
+                            </tr>
+                            
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center">
+                                        <div class="w-16 h-16 bg-gray-200 rounded-lg mr-4"></div>
+                                        <div>
+                                            <p class="font-bold">Synthetic Motor Oil 5W-30</p>
+                                            <p class="text-sm text-gray-600">Part #GB-OIL-5W30</p>
+                                            <p class="text-sm text-gray-500">5 Quart, Full Synthetic</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-semibold rounded-full">
+                                        Shipped
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4">2</td>
+                                <td class="py-4 px-4 font-bold">$35.98</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="border-t">
+                                <td colspan="3" class="py-4 px-4 text-right font-bold">Subtotal</td>
+                                <td class="py-4 px-4 font-bold">$168.47</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="py-2 px-4 text-right font-bold">Shipping</td>
+                                <td class="py-2 px-4 font-bold">$9.99</td>
+                            </tr>
+                            <tr class="border-t">
+                                <td colspan="3" class="py-4 px-4 text-right font-bold text-lg">Total</td>
+                                <td class="py-4 px-4 font-bold text-lg text-primary">$178.46</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Shipping & Delivery Info -->
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <!-- Shipping Address -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 tracking-card">
+                    <h3 class="text-xl font-bold mb-4">Shipping Address</h3>
+                    <div class="space-y-2">
+                        <p class="font-bold">Alex Johnson</p>
+                        <p>123 Main Street</p>
+                        <p>Chicago, IL 60601</p>
+                        <p>United States</p>
+                        <p class="mt-4">
+                            <i class="fas fa-phone text-gray-400 mr-2"></i>
+                            (312) 555-1234
+                        </p>
+                        <p>
+                            <i class="fas fa-envelope text-gray-400 mr-2"></i>
+                            alex.johnson@example.com
+                        </p>
+                    </div>
+                    <div class="mt-6">
+                        <button class="text-primary font-semibold hover:underline flex items-center">
+                            <i class="fas fa-edit mr-2"></i>
+                            Request Address Change
+                        </button>
+                        <p class="text-xs text-gray-500 mt-2">Contact support immediately if order hasn't shipped</p>
+                    </div>
+                </div>
+                
+                <!-- Delivery Options -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 tracking-card">
+                    <h3 class="text-xl font-bold mb-4">Delivery Options</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-bold mb-2 text-blue-900">Need It Sooner?</h4>
+                            <p class="text-sm text-blue-800 mb-3">Upgrade to faster shipping while package is in transit.</p>
+                            <button class="w-full bg-blue-100 text-blue-800 font-semibold py-2 rounded-lg hover:bg-blue-200 transition">
+                                Upgrade to UPS 2-Day Air
+                            </button>
+                        </div>
+                        
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <h4 class="font-bold mb-2 text-green-900">Delivery Issues?</h4>
+                            <p class="text-sm text-green-800 mb-3">Having problems with delivery? We're here to help.</p>
+                            <div class="flex space-x-3">
+                                <a href="contact.html" class="flex-1 bg-green-100 text-green-800 font-semibold py-2 rounded-lg hover:bg-green-200 transition text-center">
+                                    Contact Support
+                                </a>
+                                <button class="flex-1 bg-white border border-green-200 text-green-800 font-semibold py-2 rounded-lg hover:bg-green-50 transition">
+                                    Report Issue
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help & Support -->
+            <div class="bg-gradient-to-r from-primary to-blue-800 rounded-2xl p-8 md:p-12 text-white mb-12">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4">Need Help With Your Delivery?</h2>
+                    <p class="text-xl opacity-90 mb-6">Our support team is ready to assist with any delivery questions or concerns</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="contact.html" class="bg-white text-dark font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition transform hover:-translate-y-1">
+                            <i class="fas fa-headset mr-2"></i>
+                            Contact Delivery Support
+                        </a>
+                        <a href="tel:5551234567" class="bg-transparent border-2 border-white text-white font-bold px-8 py-3 rounded-lg hover:bg-white hover:text-dark transition">
+                            <i class="fas fa-phone mr-2"></i>
+                            Call: (555) 123-4567
+                        </a>
+                    </div>
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-4 bg-white/10 rounded-lg">
+                            <i class="fas fa-clock text-2xl mb-3"></i>
+                            <p class="font-bold">24/7 Tracking</p>
+                            <p class="text-sm opacity-90 mt-2">Track anytime with your order number</p>
+                        </div>
+                        <div class="p-4 bg-white/10 rounded-lg">
+                            <i class="fas fa-sms text-2xl mb-3"></i>
+                            <p class="font-bold">Text Updates</p>
+                            <p class="text-sm opacity-90 mt-2">Get delivery alerts via SMS</p>
+                        </div>
+                        <div class="p-4 bg-white/10 rounded-lg">
+                            <i class="fas fa-map-pin text-2xl mb-3"></i>
+                            <p class="font-bold">Live Tracking</p>
+                            <p class="text-sm opacity-90 mt-2">Real-time package location</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message (Initially Hidden) -->
+        <div id="noResults" class="hidden bg-white rounded-2xl shadow-lg p-8 mb-12">
+            <div class="text-center py-12">
+                <div class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-exclamation-triangle text-red-500 text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Order Not Found</h3>
+                <p class="text-gray-600 mb-6 max-w-md mx-auto">
+                    We couldn't find an order matching the information you provided. Please check your order number and email address and try again.
+                </p>
+                <div class="space-y-4 max-w-sm mx-auto">
+                    <button id="tryAgainBtn" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-900 transition">
+                        Try Again
+                    </button>
+                    <div class="text-sm text-gray-600">
+                        <p class="mb-2">Still having trouble? Try these options:</p>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <a href="contact.html" class="text-primary font-semibold hover:underline">
+                                <i class="fas fa-headset mr-1"></i>
+                                Contact Support
+                            </a>
+                            <a href="faq.html#tracking" class="text-primary font-semibold hover:underline">
+                                <i class="fas fa-question-circle mr-1"></i>
+                                Tracking FAQ
+                            </a>
+                            <a href="#" class="text-primary font-semibold hover:underline">
+                                <i class="fas fa-envelope mr-1"></i>
+                                Resend Confirmation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-cogs text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+                    </div>
+                    <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2020.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition">Shop All</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="tracking.html" class="text-gray-400 hover:text-white transition font-semibold">Track Order</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Order Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition">FAQs</a></li>
+                        <li><a href="shipping.html" class="text-gray-400 hover:text-white transition">Shipping Policy</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-white transition">Return Policy</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-secondary"></i>
+                            123 Auto Street, Detroit, MI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-secondary"></i>
+                            (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-secondary"></i>
+                            support@gearbox.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 GearBox Auto Parts. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtnTrack = document.getElementById('mobileMenuBtnTrack');
+        const mobileMenuTrack = document.getElementById('mobileMenuTrack');
+        const menuIconTrack = document.getElementById('menuIconTrack');
+        
+        if (mobileMenuBtnTrack && mobileMenuTrack) {
+            mobileMenuBtnTrack.addEventListener('click', () => {
+                mobileMenuTrack.classList.toggle('hidden');
+                if (menuIconTrack) {
+                    if (mobileMenuTrack.classList.contains('hidden')) {
+                        menuIconTrack.className = 'fas fa-bars';
+                    } else {
+                        menuIconTrack.className = 'fas fa-times';
+                    }
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!mobileMenuTrack.contains(event.target) && 
+                    !mobileMenuBtnTrack.contains(event.target) && 
+                    !mobileMenuTrack.classList.contains('hidden')) {
+                    mobileMenuTrack.classList.add('hidden');
+                    if (menuIconTrack) {
+                        menuIconTrack.className = 'fas fa-bars';
+                    }
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const mobileLinks = mobileMenuTrack.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuTrack.classList.add('hidden');
+                    if (menuIconTrack) {
+                        menuIconTrack.className = 'fas fa-bars';
+                    }
+                });
+            });
+        }
+
+        // Tracking Form Handling
+        const trackingForm = document.getElementById('trackingForm');
+        const trackingResults = document.getElementById('trackingResults');
+        const noResults = document.getElementById('noResults');
+        const findOrderBtn = document.getElementById('findOrderBtn');
+        const guestTrackLink = document.getElementById('guestTrackLink');
+        const tryAgainBtn = document.getElementById('tryAgainBtn');
+        
+        // Demo tracking data
+        const demoOrders = {
+            'GB-2025-12345': {
+                email: 'demo@example.com',
+                status: 'in-transit',
+                progress: 60,
+                date: 'Dec 15, 2025',
+                delivery: 'Dec 18, 2025',
+                method: 'UPS Ground',
+                tracking: '1Z999AA1234567890'
+            },
+            'GB-2025-67890': {
+                email: 'demo@example.com',
+                status: 'delivered',
+                progress: 100,
+                date: 'Dec 10, 2025',
+                delivery: 'Dec 13, 2025',
+                method: 'FedEx Ground',
+                tracking: '123456789012'
+            },
+            'GB-2025-11223': {
+                email: 'demo@example.com',
+                status: 'processing',
+                progress: 30,
+                date: 'Dec 16, 2025',
+                delivery: 'Dec 20, 2025',
+                method: 'USPS Priority',
+                tracking: '9205590164912345678901'
+            }
+        };
+        
+        if (trackingForm) {
+            trackingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const orderNumber = document.getElementById('orderNumber').value.trim().toUpperCase();
+                const email = document.getElementById('trackingEmail').value.trim().toLowerCase();
+                
+                // Demo validation - in real app, this would call your backend
+                if (demoOrders[orderNumber] && email.includes('@')) {
+                    // Show tracking results
+                    trackingResults.classList.remove('hidden');
+                    noResults.classList.add('hidden');
+                    
+                    // Update demo data
+                    const order = demoOrders[orderNumber];
+                    document.getElementById('demoOrderNumber').textContent = orderNumber;
+                    document.getElementById('demoOrderDate').textContent = order.date;
+                    document.getElementById('demoDeliveryDate').textContent = order.delivery;
+                    document.getElementById('demoShippingMethod').textContent = order.method;
+                    document.getElementById('demoTrackingNumber').textContent = order.tracking;
+                    document.getElementById('progressPercent').textContent = order.progress + '%';
+                    document.getElementById('progressFill').style.width = order.progress + '%';
+                    
+                    // Scroll to results
+                    trackingResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    // Show no results
+                    trackingResults.classList.add('hidden');
+                    noResults.classList.remove('hidden');
+                    
+                    // Scroll to no results
+                    noResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+        
+        // Find order number button
+        if (findOrderBtn) {
+            findOrderBtn.addEventListener('click', function() {
+                alert('Check your email for your order confirmation. Your order number starts with "GB-" followed by the year and a 5-digit number (e.g., GB-2025-12345).');
+            });
+        }
+        
+        // Guest tracking link
+        if (guestTrackLink) {
+            guestTrackLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Pre-fill demo data for testing
+                document.getElementById('orderNumber').value = 'GB-2025-12345';
+                document.getElementById('trackingEmail').value = 'demo@example.com';
+                // Trigger form submission
+                trackingForm.dispatchEvent(new Event('submit'));
+            });
+        }
+        
+        // Try again button
+        if (tryAgainBtn) {
+            tryAgainBtn.addEventListener('click', function() {
+                noResults.classList.add('hidden');
+                document.getElementById('orderNumber').value = '';
+                document.getElementById('trackingEmail').value = '';
+                document.getElementById('orderNumber').focus();
+            });
+        }
+        
+        // Print tracking button
+        const printTrackingBtn = document.getElementById('printTracking');
+        if (printTrackingBtn) {
+            printTrackingBtn.addEventListener('click', function() {
+                window.print();
+            });
+        }
+        
+        // Share tracking button
+        const shareTrackingBtn = document.getElementById('shareTracking');
+        if (shareTrackingBtn) {
+            shareTrackingBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'GearBox Order Tracking',
+                        text: `Track my GearBox Auto Parts order ${document.getElementById('demoOrderNumber').textContent}`,
+                        url: window.location.href,
+                    })
+                    .catch(console.error);
+                } else {
+                    // Fallback for browsers without Web Share API
+                    const trackingUrl = window.location.href;
+                    navigator.clipboard.writeText(trackingUrl).then(() => {
+                        alert('Tracking link copied to clipboard!');
+                    });
+                }
+            });
+        }
+        
+        // Copy tracking number function
+        window.copyTrackingNumber = function (button) {
+      const trackingNum =
+        document.getElementById('demoTrackingNumber').textContent;
+
+      navigator.clipboard.writeText(trackingNum).then(() => {
+        const originalText = button.innerHTML;
+
+        button.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
+
+        setTimeout(() => {
+          button.innerHTML = originalText;
+    }, 2000);
+  });
+};
+
+        
+        // Simulate live updates
+        function simulateLiveUpdate() {
+            setTimeout(() => {
+                const progressFill = document.getElementById('progressFill');
+                const progressPercent = document.getElementById('progressPercent');
+                
+                if (progressFill && progressPercent) {
+                    const currentWidth = parseInt(progressFill.style.width);
+                    if (currentWidth < 100) {
+                        const newWidth = Math.min(currentWidth + 5, 100);
+                        progressFill.style.width = newWidth + '%';
+                        progressPercent.textContent = newWidth + '%';
+                    }
+                }
+            }, 10000); // Update every 10 seconds
+        }
+        
+        // Start simulation when page loads
+        window.addEventListener('load', simulateLiveUpdate);
+        
+        // Auto-focus search field
+        document.getElementById('orderNumber')?.focus();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

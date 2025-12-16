@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | GearBox Auto Parts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#f59e0b',
+                        'accent': '#dc2626',
+                        'light': '#f8fafc',
+                        'dark': '#0f172a'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Add this style for mobile menu transitions -->
+    <style>
+        #mobileMenuAbout {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        #mobileMenuAbout.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        
+        #mobileMenuAbout:not(.hidden) {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-dark">
+                        Gear<span class="text-primary">Box</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-dark hover:text-primary transition">Home</a>
+                    <a href="products.html" class="font-medium text-dark hover:text-primary transition">Shop</a>
+                    <a href="about.html" class="font-medium text-dark hover:text-primary border-b-2 border-primary transition">About</a>
+                    <a href="contact.html" class="font-medium text-dark hover:text-primary transition">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex">
+                        <a href="#" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark transition duration-[.3s]">
+                            Community
+                        </a>
+                    </div>
+                    
+                    <!-- Cart & User Icons for mobile -->
+                    <div class="flex items-center space-x-4 md:hidden">
+                        <a href="cart.html" class="relative">
+                            <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+                            <span class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                        
+                        <a href="wishlist.html" class="relative">
+                            <i class="far fa-heart text-xl text-dark hover:text-accent"></i>
+                            <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtnAbout" class="md:hidden text-2xl">
+                        <i id="menuIcon" class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenuAbout" class="md:hidden mt-4 hidden">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Home</a>
+                        <a href="products.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Shop</a>
+                        <a href="#categories" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Categories</a>
+                        <a href="about.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">About</a>
+                        <a href="contact.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Contact</a>
+                        <div class="pt-2 border-t">
+                            <a href="#" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition flex items-center">
+                                <i class="fas fa-users mr-2 text-primary"></i>
+                                Community
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Rest of your content remains exactly the same -->
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-primary to-blue-800 rounded-2xl overflow-hidden mb-12">
+            <div class="px-8 py-16 md:px-16 md:py-24 text-white text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">About Gear<span class="text-secondary">Box</span></h1>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">Premium auto parts for enthusiasts and professionals since 2020</p>
+            </div>
+        </div>
+
+        <!-- Our Story -->
+        <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <div>
+                <h2 class="text-3xl font-bold mb-6">Our Story</h2>
+                <p class="text-gray-600 mb-4">
+                    GearBox was founded in 2024 by a team of automotive engineers and racing enthusiasts who were frustrated with the lack of quality parts available to everyday car lovers. What started as a small garage operation has grown into a leading online destination for premium auto parts.
+                </p>
+                <p class="text-gray-600 mb-4">
+                    Our mission is simple: to provide car enthusiasts, professional mechanics, and DIYers with access to high-performance parts that don't break the bank. We believe everyone deserves to experience the thrill of a well-tuned machine.
+                </p>
+                <p class="text-gray-600">
+                    From our headquarters in Detroit, the heart of American automotive innovation, we're committed to pushing the boundaries of what's possible in aftermarket parts.
+                </p>
+            </div>
+            <div>
+                <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                     alt="GearBox Workshop" 
+                     class="rounded-2xl shadow-xl">
+            </div>
+        </div>
+
+        <!-- Our Values -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Core Values</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-medal text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Quality First</h3>
+                    <p class="text-gray-600 text-center">Every part undergoes rigorous testing and quality control to ensure performance and durability you can trust.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-headset text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Expert Support</h3>
+                    <p class="text-gray-600 text-center">Our team of ASE-certified technicians is available to help with installation advice and technical questions.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-rocket text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Performance Driven</h3>
+                    <p class="text-gray-600 text-center">We test every product on real vehicles to ensure it delivers the performance improvements we promise.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="bg-primary text-white rounded-2xl p-8 mb-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-4xl font-bold mb-2">1000+</div>
+                    <p class="opacity-90">Products Available</p>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">24/7</div>
+                    <p class="opacity-90">Support Available</p>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">50+</div>
+                    <p class="opacity-90">Brand Partners</p>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">48h</div>
+                    <p class="opacity-90">Avg. Shipping Time</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">The GearBox Team</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 border-primary/20">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                             alt="Alex Morgan" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-lg">Alex Morgan</h3>
+                    <p class="text-gray-600">Founder & CEO</p>
+                    <p class="text-sm text-gray-500 mt-2">Former racing engineer</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 border-primary/20">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                             alt="Sarah Chen" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-lg">Sarah Chen</h3>
+                    <p class="text-gray-600">Technical Director</p>
+                    <p class="text-sm text-gray-500 mt-2">ASE Master Technician</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 border-primary/20">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                             alt="Marcus Johnson" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-lg">Marcus Johnson</h3>
+                    <p class="text-gray-600">Operations Manager</p>
+                    <p class="text-sm text-gray-500 mt-2">Supply chain expert</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 border-primary/20">
+                        <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                             alt="Lisa Rodriguez" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-lg">Lisa Rodriguez</h3>
+                    <p class="text-gray-600">Customer Experience</p>
+                    <p class="text-sm text-gray-500 mt-2">15+ years in automotive</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-gradient-to-r from-secondary to-orange-500 rounded-2xl p-8 text-center text-white">
+            <h2 class="text-2xl font-bold mb-4">Ready to Upgrade Your Ride?</h2>
+            <p class="mb-6 opacity-90">Browse our premium selection of auto parts and accessories</p>
+            <a href="products.html" class="inline-block bg-white text-dark font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition">
+                Shop Now <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-cogs text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+                    </div>
+                    <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2020.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white">Shop All</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                      <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white">Shipping Policy</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-white">Returns</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-secondary"></i>
+                            123 Auto Street, Detroit, MI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-secondary"></i>
+                            (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-secondary"></i>
+                            support@gearbox.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 GearBox Auto Parts. All rights reserved. | Portfolio Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle for about page
+        const mobileMenuBtnAbout = document.getElementById('mobileMenuBtnAbout');
+        const mobileMenuAbout = document.getElementById('mobileMenuAbout');
+        const menuIcon = document.getElementById('menuIcon');
+        
+        if (mobileMenuBtnAbout && mobileMenuAbout) {
+            mobileMenuBtnAbout.addEventListener('click', () => {
+                mobileMenuAbout.classList.toggle('hidden');
+                if (menuIcon) {
+                    if (mobileMenuAbout.classList.contains('hidden')) {
+                        menuIcon.className = 'fas fa-bars';
+                    } else {
+                        menuIcon.className = 'fas fa-times';
+                    }
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!mobileMenuAbout.contains(event.target) && 
+                    !mobileMenuBtnAbout.contains(event.target) && 
+                    !mobileMenuAbout.classList.contains('hidden')) {
+                    mobileMenuAbout.classList.add('hidden');
+                    if (menuIcon) {
+                        menuIcon.className = 'fas fa-bars';
+                    }
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const mobileLinks = mobileMenuAbout.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuAbout.classList.add('hidden');
+                    if (menuIcon) {
+                        menuIcon.className = 'fas fa-bars';
+                    }
+                });
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

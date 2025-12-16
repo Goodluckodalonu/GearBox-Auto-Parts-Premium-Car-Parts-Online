@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs | GearBox Auto Parts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#f59e0b',
+                        'accent': '#dc2626',
+                        'light': '#f8fafc',
+                        'dark': '#0f172a'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Style for mobile menu and FAQ -->
+    <style>
+        #mobileMenuFaq {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        #mobileMenuFaq.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        
+        #mobileMenuFaq:not(.hidden) {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* FAQ accordion styling */
+        .faq-item {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .faq-question {
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question.active {
+            background-color: #f8fafc;
+        }
+        
+        .faq-question:hover {
+            background-color: #f8fafc;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .faq-answer.active {
+            max-height: 1000px;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-icon.active {
+            transform: rotate(180deg);
+        }
+        
+        /* Category badge styling */
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Search highlight */
+        .highlight {
+            background-color: #fef3c7;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-dark">
+                        Gear<span class="text-primary">Box</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-dark hover:text-primary transition">Home</a>
+                    <a href="products.html" class="font-medium text-dark hover:text-primary transition">Shop</a>
+                    <a href="about.html" class="font-medium text-dark hover:text-primary transition">About</a>
+                    <a href="contact.html" class="font-medium text-dark hover:text-primary transition">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex">
+                        <a href="#" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark transition duration-[.3s]">
+                            Community
+                        </a>
+                    </div>
+                    
+                    <!-- Cart & Wishlist Icons for mobile -->
+                    <div class="flex items-center space-x-4 md:hidden">
+                        <a href="cart.html" class="relative">
+                            <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+                            <span class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                        
+                        <a href="wishlist.html" class="relative">
+                            <i class="far fa-heart text-xl text-dark hover:text-accent"></i>
+                            <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtnFaq" class="md:hidden text-2xl">
+                        <i id="menuIconFaq" class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenuFaq" class="md:hidden mt-4 hidden">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Home</a>
+                        <a href="products.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Shop</a>
+                        <a href="#categories" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Categories</a>
+                        <a href="about.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">About</a>
+                        <a href="contact.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Contact</a>
+                        <div class="pt-2 border-t">
+                            <a href="#" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition flex items-center">
+                                <i class="fas fa-users mr-2 text-primary"></i>
+                                Community
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-primary to-blue-800 rounded-2xl overflow-hidden mb-12">
+            <div class="px-8 py-16 md:px-16 md:py-24 text-white text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h1>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">Find answers to common questions about GearBox Auto Parts</p>
+            </div>
+        </div>
+
+        <!-- Search & Filter Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-12">
+            <div class="max-w-4xl mx-auto">
+                <!-- Search Bar -->
+                <div class="mb-8">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <input type="text" id="faqSearch" placeholder="Search for answers..." 
+                               class="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+                            <button id="clearSearch" class="text-gray-400 hover:text-gray-600 hidden">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Search through our most common questions about orders, shipping, returns, and products.</p>
+                </div>
+                
+                <!-- FAQ Categories -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-4">Browse by Category</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <button class="category-filter bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition" data-category="all">
+                            All Questions
+                        </button>
+                        <button class="category-filter bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition" data-category="orders">
+                            Orders & Payments
+                        </button>
+                        <button class="category-filter bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition" data-category="shipping">
+                            Shipping & Delivery
+                        </button>
+                        <button class="category-filter bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition" data-category="returns">
+                            Returns & Exchanges
+                        </button>
+                        <button class="category-filter bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition" data-category="products">
+                            Products & Compatibility
+                        </button>
+                        <button class="category-filter bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition" data-category="technical">
+                            Technical Support
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results Counter -->
+                <div id="resultsCounter" class="text-sm text-gray-600 mb-6">
+                    Showing <span id="visibleCount" class="font-semibold">0</span> of <span id="totalCount" class="font-semibold">0</span> questions
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Content -->
+        <div class="max-w-4xl mx-auto mb-16">
+            <!-- Orders & Payments Section -->
+            <div class="mb-12" id="category-orders">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-dark">Orders & Payments</h2>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item bg-white" data-category="orders">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-blue-100 text-blue-800">Orders</span>
+                                <span class="font-bold text-lg">How do I place an order?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p class="mb-3">Placing an order is simple:</p>
+                                <ol class="list-decimal pl-5 space-y-2">
+                                    <li>Browse our products and add items to your cart</li>
+                                    <li>Click the cart icon and review your items</li>
+                                    <li>Click "Checkout" and enter your shipping information</li>
+                                    <li>Choose your shipping method and enter payment details</li>
+                                    <li>Review your order and click "Place Order"</li>
+                                </ol>
+                                <p class="mt-4">You'll receive an order confirmation email immediately. If you don't see it, check your spam folder.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item bg-white" data-category="orders">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-blue-100 text-blue-800">Payments</span>
+                                <span class="font-bold text-lg">What payment methods do you accept?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p class="mb-3">We accept the following payment methods:</p>
+                                <ul class="list-disc pl-5 space-y-2 mb-4">
+                                    <li><strong>Credit/Debit Cards:</strong> Visa, Mastercard, American Express, Discover</li>
+                                    <li><strong>Digital Wallets:</strong> PayPal, Apple Pay, Google Pay</li>
+                                    <li><strong>Shop Pay:</strong> Installment payments available</li>
+                                </ul>
+                                <p>All payments are processed securely through encrypted channels. We don't store your full credit card information on our servers.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item bg-white" data-category="orders">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-blue-100 text-blue-800">Orders</span>
+                                <span class="font-bold text-lg">Can I modify or cancel my order after placing it?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p class="mb-3">You can modify or cancel your order within 1 hour of placing it, as long as it hasn't entered the shipping process.</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>To cancel:</strong> Contact our customer service immediately at <a href="mailto:support@gearboxparts.com" class="text-primary hover:underline">support@gearboxparts.com</a> or call <span class="font-semibold">(555) 123-4567</span></li>
+                                    <li><strong>To modify:</strong> We may be able to add items or change shipping methods before shipment</li>
+                                </ul>
+                                <p class="mt-4 text-sm text-gray-500">Once an order has shipped, you'll need to wait for delivery and use our return process.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shipping & Delivery Section -->
+            <div class="mb-12" id="category-shipping">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-shipping-fast text-green-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-dark">Shipping & Delivery</h2>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item bg-white" data-category="shipping">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-green-100 text-green-800">Shipping</span>
+                                <span class="font-bold text-lg">How long does shipping take?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p class="mb-3">Shipping times vary based on your location and chosen shipping method:</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>Standard Shipping:</strong> 3-7 business days (Free on orders over $100)</li>
+                                    <li><strong>Express Shipping:</strong> 2 business days - $19.99</li>
+                                    <li><strong>Overnight Shipping:</strong> 1 business day - $34.99</li>
+                                    <li><strong>Local Pickup:</strong> Same day (Detroit store) - Free</li>
+                                </ul>
+                                <p class="mt-4">Orders typically process within 1-2 business days before shipping. You'll receive tracking information via email once your order ships.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item bg-white" data-category="shipping">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-green-100 text-green-800">Delivery</span>
+                                <span class="font-bold text-lg">Do you ship internationally?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p>Currently, we only ship to the United States (all 50 states) and Canada. For Canadian orders:</p>
+                                <ul class="list-disc pl-5 space-y-2 mt-3">
+                                    <li>Delivery takes 7-14 business days</li>
+                                    <li>Additional customs fees and taxes may apply</li>
+                                    <li>Some restricted items cannot be shipped internationally</li>
+                                </ul>
+                                <p class="mt-4">For shipping to other countries, please <a href="contact.html" class="text-primary hover:underline">contact us</a> for a custom quote and availability.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 6 -->
+                    <div class="faq-item bg-white" data-category="shipping">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-green-100 text-green-800">Tracking</span>
+                                <span class="font-bold text-lg">How can I track my order?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p>You can track your order in several ways:</p>
+                                <ol class="list-decimal pl-5 space-y-2 mt-3">
+                                    <li><strong>Email:</strong> Check your order confirmation email for tracking links</li>
+                                    <li><strong>Account:</strong> Log into your GearBox account and view order history</li>
+                                    <li><strong>Carrier Website:</strong> Use the tracking number provided on the carrier's website (UPS, FedEx, USPS)</li>
+                                    <li><strong>Contact Us:</strong> Call our support team at <span class="font-semibold">(555) 123-4567</span> for assistance</li>
+                                </ol>
+                                <p class="mt-4 text-sm text-gray-500">Tracking information is typically available within 24 hours of your order shipping.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Returns & Exchanges Section -->
+            <div class="mb-12" id="category-returns">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-undo-alt text-red-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-dark">Returns & Exchanges</h2>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 7 -->
+                    <div class="faq-item bg-white" data-category="returns">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-red-100 text-red-800">Returns</span>
+                                <span class="font-bold text-lg">What is your return policy?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p class="mb-3">We offer a 30-day return policy from the date of delivery:</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>Unused Items:</strong> Full refund if returned in original packaging with all accessories</li>
+                                    <li><strong>Defective Items:</strong> Free return shipping and full refund or replacement</li>
+                                    <li><strong>Change of Mind:</strong> Return shipping paid by customer, 15% restocking fee may apply</li>
+                                    <li><strong>Opened/Used Items:</strong> Subject to inspection, partial refund may be issued</li>
+                                </ul>
+                                <p class="mt-4">To initiate a return, contact <a href="mailto:returns@gearboxparts.com" class="text-primary hover:underline">returns@gearboxparts.com</a> with your order number.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 8 -->
+                    <div class="faq-item bg-white" data-category="returns">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-red-100 text-red-800">Exchanges</span>
+                                <span class="font-bold text-lg">How do I exchange an item?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p>To exchange an item:</p>
+                                <ol class="list-decimal pl-5 space-y-2 mt-3">
+                                    <li>Contact our returns department within 30 days of delivery</li>
+                                    <li>Provide your order number and reason for exchange</li>
+                                    <li>We'll email you a return authorization and shipping label</li>
+                                    <li>Once we receive the returned item, we'll ship the replacement</li>
+                                </ol>
+                                <div class="mt-4 p-4 bg-yellow-50 rounded-lg">
+                                    <p class="text-sm text-yellow-800"><strong>Note:</strong> For size or fit exchanges, we recommend contacting our technical support first at <span class="font-semibold">(555) 123-4568</span> to ensure you get the correct part.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 9 -->
+                    <div class="faq-item bg-white" data-category="returns">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-red-100 text-red-800">Refunds</span>
+                                <span class="font-bold text-lg">How long do refunds take to process?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p>Refund processing times:</p>
+                                <ul class="list-disc pl-5 space-y-2 mt-3">
+                                    <li><strong>Upon Receipt:</strong> Refunds are processed within 3-5 business days after we receive and inspect the return</li>
+                                    <li><strong>Credit Card:</strong> 5-10 business days to appear on your statement</li>
+                                    <li><strong>PayPal:</strong> 2-5 business days</li>
+                                    <li><strong>Store Credit:</strong> Instant upon approval</li>
+                                </ul>
+                                <p class="mt-4 text-sm text-gray-500">You'll receive an email notification once your refund has been processed. The timing of when the funds appear in your account depends on your financial institution.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products & Compatibility Section -->
+            <div class="mb-12" id="category-products">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-cogs text-purple-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-dark">Products & Compatibility</h2>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 10 -->
+                    <div class="faq-item bg-white" data-category="products">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-purple-100 text-purple-800">Compatibility</span>
+                                <span class="font-bold text-lg">How do I know if a part fits my vehicle?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p>We offer several ways to ensure part compatibility:</p>
+                                <ul class="list-disc pl-5 space-y-2 mt-3">
+                                    <li><strong>Vehicle Selector:</strong> Use the vehicle selector tool on product pages</li>
+                                    <li><strong>Fitment Information:</strong> Check the "Specifications" tab on each product</li>
+                                    <li><strong>VIN Lookup:</strong> Enter your Vehicle Identification Number for exact matches</li>
+                                    <li><strong>Live Chat:</strong> Chat with our technicians for compatibility questions</li>
+                                </ul>
+                                <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                                    <p class="text-sm text-blue-800"><strong>Pro Tip:</strong> Always double-check fitment by comparing your old part numbers with our product specifications. When in doubt, contact our technical support.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 11 -->
+                    <div class="faq-item bg-white" data-category="products">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-purple-100 text-purple-800">Quality</span>
+                                <span class="font-bold text-lg">Are your parts OEM quality or aftermarket?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p>We carry both OEM-equivalent and performance aftermarket parts:</p>
+                                <ul class="list-disc pl-5 space-y-2 mt-3">
+                                    <li><strong>OEM Equivalent:</strong> Meets or exceeds original equipment specifications</li>
+                                    <li><strong>Performance Parts:</strong> Upgraded components for enhanced performance</li>
+                                    <li><strong>Brand Selection:</strong> We carefully select reputable manufacturers</li>
+                                    <li><strong>Quality Assurance:</strong> All parts undergo quality checks before shipping</li>
+                                </ul>
+                                <p class="mt-4">Each product page clearly indicates whether it's OEM-equivalent or performance-grade. We also provide manufacturer warranty information for every part.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 12 -->
+                    <div class="faq-item bg-white" data-category="products">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-purple-100 text-purple-800">Warranty</span>
+                                <span class="font-bold text-lg">Do your parts come with a warranty?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p class="mb-3">Yes, most parts come with manufacturer warranties:</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>Standard Parts:</strong> Typically 1-year limited warranty</li>
+                                    <li><strong>Performance Parts:</strong> Varies by manufacturer (often 2-5 years)</li>
+                                    <li><strong>Lifetime Warranty:</strong> Available on select brands</li>
+                                    <li><strong>GearBox Guarantee:</strong> 30-day satisfaction guarantee on all purchases</li>
+                                </ul>
+                                <p class="mt-4">Warranty details are listed on each product page. To make a warranty claim, contact our support team with your order number and photos of the issue.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Support Section -->
+            <div class="mb-12" id="category-technical">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-tools text-yellow-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-dark">Technical Support</h2>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 13 -->
+                    <div class="faq-item bg-white" data-category="technical">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-yellow-100 text-yellow-800">Installation</span>
+                                <span class="font-bold text-lg">Do you provide installation instructions or support?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p>Yes! We provide comprehensive installation support:</p>
+                                <ul class="list-disc pl-5 space-y-2 mt-3">
+                                    <li><strong>Digital Manuals:</strong> Downloadable installation guides for most parts</li>
+                                    <li><strong>Video Tutorials:</strong> Step-by-step installation videos on our YouTube channel</li>
+                                    <li><strong>Technical Support:</strong> ASE-certified technicians available by phone at <span class="font-semibold">(555) 123-4568</span></li>
+                                    <li><strong>Live Chat:</strong> Real-time assistance during business hours</li>
+                                    <li><strong>Community Forum:</strong> DIY tips and advice from other enthusiasts</li>
+                                </ul>
+                                <p class="mt-4">For complex installations, we recommend consulting a professional mechanic or using our recommended installer network.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 14 -->
+                    <div class="faq-item bg-white" data-category="technical">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-yellow-100 text-yellow-800">Support</span>
+                                <span class="font-bold text-lg">What are your technical support hours?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p>Our ASE-certified technical support team is available:</p>
+                                <ul class="list-disc pl-5 space-y-2 mt-3">
+                                    <li><strong>Monday-Friday:</strong> 8:00 AM - 8:00 PM EST</li>
+                                    <li><strong>Saturday:</strong> 9:00 AM - 5:00 PM EST</li>
+                                    <li><strong>Sunday:</strong> 10:00 AM - 4:00 PM EST</li>
+                                </ul>
+                                <p class="mt-4">You can reach technical support by:</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>Phone:</strong> <span class="font-semibold">(555) 123-4568</span> (technical support line)</li>
+                                    <li><strong>Email:</strong> <a href="mailto:techsupport@gearboxparts.com" class="text-primary hover:underline">techsupport@gearboxparts.com</a></li>
+                                    <li><strong>Live Chat:</strong> Available on our website during business hours</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 15 -->
+                    <div class="faq-item bg-white" data-category="technical">
+                        <button class="faq-question w-full text-left p-6 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="category-badge bg-yellow-100 text-yellow-800">Tools</span>
+                                <span class="font-bold text-lg">What tools do I need for installation?</span>
+                            </div>
+                            <i class="fas fa-chevron-down faq-icon text-primary"></i>
+                        </button>
+                        <div class="faq-answer px-6">
+                            <div class="pb-6 text-gray-600">
+                                <p class="mb-3">Tool requirements vary by part, but a basic automotive toolkit should include:</p>
+                                <div class="grid md:grid-cols-2 gap-4 mt-3">
+                                    <div>
+                                        <h4 class="font-bold mb-2">Basic Tools</h4>
+                                        <ul class="list-disc pl-5 space-y-1">
+                                            <li>Socket set (metric and standard)</li>
+                                            <li>Wrench set</li>
+                                            <li>Screwdrivers (Phillips and flathead)</li>
+                                            <li>Pliers (regular and needle-nose)</li>
+                                            <li>Torque wrench</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-2">Specialized Tools</h4>
+                                        <ul class="list-disc pl-5 space-y-1">
+                                            <li>Jack and jack stands</li>
+                                            <li>Oil filter wrench</li>
+                                            <li>Brake caliper tool</li>
+                                            <li>Spark plug socket</li>
+                                            <li>OBD-II scanner</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p class="mt-4">Specific tool requirements are listed in each product's installation guide. For complex jobs, consider renting specialized tools or visiting a professional.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Still Have Questions -->
+            <div class="bg-gradient-to-r from-primary to-blue-800 rounded-2xl p-8 md:p-12 text-center text-white">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Still Have Questions?</h2>
+                <p class="text-xl opacity-90 mb-6 max-w-2xl mx-auto">Our customer service team is here to help with any questions not covered here</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-white text-dark font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition transform hover:-translate-y-1">
+                        Contact Us <i class="ml-2 fas fa-headset"></i>
+                    </a>
+                    <a href="tel:5551234567" class="bg-transparent border-2 border-white text-white font-bold px-8 py-3 rounded-lg hover:bg-white hover:text-dark transition">
+                        Call Now: (555) 123-4567
+                    </a>
+                </div>
+                <p class="mt-6 text-sm opacity-80">Available Monday-Friday 8AM-8PM EST, Saturday 9AM-5PM EST</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-cogs text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+                    </div>
+                    <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2020.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition">Shop All</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Help & Support</h3>
+                    <ul class="space-y-2">
+                      <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition">FAQs</a></li>
+                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white transition">Shipping Policy</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-white transition">Returns</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-secondary"></i>
+                            123 Auto Street, Detroit, MI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-secondary"></i>
+                            (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-secondary"></i>
+                            support@gearbox.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 GearBox Auto Parts. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle for FAQ page
+        const mobileMenuBtnFaq = document.getElementById('mobileMenuBtnFaq');
+        const mobileMenuFaq = document.getElementById('mobileMenuFaq');
+        const menuIconFaq = document.getElementById('menuIconFaq');
+        
+        if (mobileMenuBtnFaq && mobileMenuFaq) {
+            mobileMenuBtnFaq.addEventListener('click', () => {
+                mobileMenuFaq.classList.toggle('hidden');
+                if (menuIconFaq) {
+                    if (mobileMenuFaq.classList.contains('hidden')) {
+                        menuIconFaq.className = 'fas fa-bars';
+                    } else {
+                        menuIconFaq.className = 'fas fa-times';
+                    }
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!mobileMenuFaq.contains(event.target) && 
+                    !mobileMenuBtnFaq.contains(event.target) && 
+                    !mobileMenuFaq.classList.contains('hidden')) {
+                    mobileMenuFaq.classList.add('hidden');
+                    if (menuIconFaq) {
+                        menuIconFaq.className = 'fas fa-bars';
+                    }
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const mobileLinks = mobileMenuFaq.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuFaq.classList.add('hidden');
+                    if (menuIconFaq) {
+                        menuIconFaq.className = 'fas fa-bars';
+                    }
+                });
+            });
+        }
+
+        // FAQ Accordion Functionality
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        // Initialize counters
+        const totalCount = faqItems.length;
+        document.getElementById('totalCount').textContent = totalCount;
+        document.getElementById('visibleCount').textContent = totalCount;
+        
+        // Accordion toggle
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('.faq-icon');
+                
+                // Toggle active classes
+                question.classList.toggle('active');
+                answer.classList.toggle('active');
+                icon.classList.toggle('active');
+                
+                // Close other FAQ items (optional)
+                faqQuestions.forEach(otherQuestion => {
+                    if (otherQuestion !== question) {
+                        const otherAnswer = otherQuestion.nextElementSibling;
+                        const otherIcon = otherQuestion.querySelector('.faq-icon');
+                        otherQuestion.classList.remove('active');
+                        otherAnswer.classList.remove('active');
+                        otherIcon.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // FAQ Search Functionality
+        const faqSearch = document.getElementById('faqSearch');
+        const clearSearch = document.getElementById('clearSearch');
+        
+        if (faqSearch) {
+            faqSearch.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const visibleItems = filterAndSearchFAQ(searchTerm);
+                
+                // Show/hide clear button
+                if (searchTerm.length > 0) {
+                    clearSearch.classList.remove('hidden');
+                } else {
+                    clearSearch.classList.add('hidden');
+                }
+                
+                // Update results counter
+                document.getElementById('visibleCount').textContent = visibleItems;
+            });
+        }
+        
+        if (clearSearch) {
+            clearSearch.addEventListener('click', function() {
+                faqSearch.value = '';
+                clearSearch.classList.add('hidden');
+                filterAndSearchFAQ('');
+                document.getElementById('visibleCount').textContent = totalCount;
+            });
+        }
+
+        // Category Filter Functionality
+        const categoryFilters = document.querySelectorAll('.category-filter');
+        
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Update active filter button
+                categoryFilters.forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-gray-100', 'text-gray-800');
+                });
+                this.classList.remove('bg-gray-100', 'text-gray-800');
+                this.classList.add('bg-primary', 'text-white');
+                
+                // Filter FAQ items
+                filterFAQByCategory(category);
+            });
+        });
+
+        // Search and Filter Functions
+        function filterAndSearchFAQ(searchTerm) {
+            let visibleCount = 0;
+            const activeCategory = document.querySelector('.category-filter.bg-primary')?.getAttribute('data-category') || 'all';
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                const category = item.getAttribute('data-category');
+                
+                // Check if item matches search term
+                const matchesSearch = searchTerm === '' || 
+                    question.includes(searchTerm) || 
+                    answer.includes(searchTerm);
+                
+                // Check if item matches category
+                const matchesCategory = activeCategory === 'all' || category === activeCategory;
+                
+                // Show/hide item
+                if (matchesSearch && matchesCategory) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                    
+                    // Highlight search term in question and answer
+                    if (searchTerm.length > 0) {
+                        highlightText(item, searchTerm);
+                    } else {
+                        removeHighlights(item);
+                    }
+                } else {
+                    item.style.display = 'none';
+                    // Close any open answers when hiding
+                    const questionBtn = item.querySelector('.faq-question');
+                    const answerDiv = item.querySelector('.faq-answer');
+                    const icon = item.querySelector('.faq-icon');
+                    questionBtn.classList.remove('active');
+                    answerDiv.classList.remove('active');
+                    icon.classList.remove('active');
+                }
+            });
+            
+            // Update results counter
+            document.getElementById('visibleCount').textContent = visibleCount;
+            return visibleCount;
+        }
+        
+        function filterFAQByCategory(category) {
+            let visibleCount = 0;
+            
+            faqItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                const searchTerm = faqSearch.value.toLowerCase();
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                // Check if item matches category and search term
+                const matchesCategory = category === 'all' || itemCategory === category;
+                const matchesSearch = searchTerm === '' || 
+                    question.includes(searchTerm) || 
+                    answer.includes(searchTerm);
+                
+                if (matchesCategory && matchesSearch) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                    // Close any open answers when hiding
+                    const questionBtn = item.querySelector('.faq-question');
+                    const answerDiv = item.querySelector('.faq-answer');
+                    const icon = item.querySelector('.faq-icon');
+                    questionBtn.classList.remove('active');
+                    answerDiv.classList.remove('active');
+                    icon.classList.remove('active');
+                }
+            });
+            
+            // Update results counter
+            document.getElementById('visibleCount').textContent = visibleCount;
+            return visibleCount;
+        }
+        
+        function highlightText(item, searchTerm) {
+            const questionElement = item.querySelector('.faq-question span:nth-child(2)');
+            const answerElement = item.querySelector('.faq-answer');
+            
+            if (questionElement) {
+                const originalText = questionElement.textContent;
+                const highlightedText = originalText.replace(
+                    new RegExp(searchTerm, 'gi'),
+                    match => `<span class="highlight">${match}</span>`
+                );
+                questionElement.innerHTML = highlightedText;
+            }
+            
+            if (answerElement) {
+                const originalText = answerElement.textContent;
+                const highlightedText = originalText.replace(
+                    new RegExp(searchTerm, 'gi'),
+                    match => `<span class="highlight">${match}</span>`
+                );
+                // Store original HTML for later
+                if (!answerElement.dataset.originalHtml) {
+                    answerElement.dataset.originalHtml = answerElement.innerHTML;
+                }
+                answerElement.innerHTML = highlightedText;
+            }
+        }
+        
+        function removeHighlights(item) {
+            const questionElement = item.querySelector('.faq-question span:nth-child(2)');
+            const answerElement = item.querySelector('.faq-answer');
+            
+            if (questionElement && questionElement.querySelector('.highlight')) {
+                questionElement.innerHTML = questionElement.textContent;
+            }
+            
+            if (answerElement && answerElement.dataset.originalHtml) {
+                answerElement.innerHTML = answerElement.dataset.originalHtml;
+            }
+        }
+
+        // Open FAQ item if URL has hash
+        window.addEventListener('load', function() {
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    // If it's a category section, scroll to it
+                    if (targetId.startsWith('category-')) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    // If it's an FAQ item, open it
+                    const faqItem = targetElement.closest('.faq-item');
+                    if (faqItem) {
+                        const question = faqItem.querySelector('.faq-question');
+                        question.click();
+                        setTimeout(() => {
+                            faqItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 300);
+                    }
+                }
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

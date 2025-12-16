@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | GearBox Auto Parts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#f59e0b',
+                        'accent': '#dc2626',
+                        'light': '#f8fafc',
+                        'dark': '#0f172a'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Style for mobile menu -->
+    <style>
+        #mobileMenuPrivacy {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        #mobileMenuPrivacy.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        
+        #mobileMenuPrivacy:not(.hidden) {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-dark">
+                        Gear<span class="text-primary">Box</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-dark hover:text-primary transition">Home</a>
+                    <a href="products.html" class="font-medium text-dark hover:text-primary transition">Shop</a>
+                    <a href="about.html" class="font-medium text-dark hover:text-primary transition">About</a>
+                    <a href="contact.html" class="font-medium text-dark hover:text-primary transition">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex">
+                        <a href="#" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark transition duration-[.3s]">
+                            Community
+                        </a>
+                    </div>
+                    
+                    <!-- Cart & Wishlist Icons for mobile -->
+                    <div class="flex items-center space-x-4 md:hidden">
+                        <a href="cart.html" class="relative">
+                            <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+                            <span class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                        
+                        <a href="wishlist.html" class="relative">
+                            <i class="far fa-heart text-xl text-dark hover:text-accent"></i>
+                            <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtnPrivacy" class="md:hidden text-2xl">
+                        <i id="menuIconPrivacy" class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenuPrivacy" class="md:hidden mt-4 hidden">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Home</a>
+                        <a href="products.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Shop</a>
+                        <a href="#categories" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Categories</a>
+                        <a href="about.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">About</a>
+                        <a href="contact.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Contact</a>
+                        <div class="pt-2 border-t">
+                            <a href="#" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition flex items-center">
+                                <i class="fas fa-users mr-2 text-primary"></i>
+                                Community
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-primary to-blue-800 rounded-2xl overflow-hidden mb-12">
+            <div class="px-8 py-16 md:px-16 md:py-24 text-white text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Privacy Policy</h1>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">How we collect, use, and protect your information at GearBox Auto Parts</p>
+                <p class="opacity-80 mt-2">Last Updated: December 16, 2025</p>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Content -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+            <div class="max-w-4xl mx-auto">
+                <!-- Introduction -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-bold mb-4 text-dark">Introduction</h2>
+                    <p class="text-gray-600 mb-4">
+                        Welcome to GearBox Auto Parts ("Company," "we," "us," or "our"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website <a href="index.html" class="text-primary hover:underline">gearboxparts.com</a>, including any other media form, media channel, mobile website, or mobile application related or connected thereto (collectively, the "Site").
+                    </p>
+                    <p class="text-gray-600">
+                        Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site. We reserve the right to make changes to this Privacy Policy at any time and for any reason. We will alert you about any changes by updating the "Last Updated" date of this Privacy Policy.
+                    </p>
+                </section>
+
+                <!-- Information We Collect -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-bold mb-4 text-dark">Information We Collect</h2>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-3 text-primary">Personal Data</h3>
+                        <p class="text-gray-600 mb-3">
+                            Personally identifiable information you voluntarily provide to us when you register on the Site, make a purchase, or contact us, which may include:
+                        </p>
+                        <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                            <li>Name, email address, and phone number</li>
+                            <li>Shipping and billing addresses</li>
+                            <li>Payment information (processed securely by our payment partners)</li>
+                            <li>Vehicle information for part recommendations</li>
+                            <li>Communication preferences</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-3 text-primary">Derivative Data</h3>
+                        <p class="text-gray-600">
+                            Information our servers automatically collect when you access the Site, such as your IP address, browser type, operating system, access times, and the pages you have viewed directly before and after accessing the Site.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-primary">Financial Data</h3>
+                        <p class="text-gray-600">
+                            Financial information, such as data related to your payment method (e.g., valid credit card number, card brand, expiration date) that we may collect when you purchase, order, return, exchange, or request information about our services from the Site. We store only very limited, if any, financial information that we collect. Otherwise, all financial information is stored by our payment processor, and you are encouraged to review their privacy policy and contact them directly for responses to your questions.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Use of Your Information -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-bold mb-4 text-dark">Use of Your Information</h2>
+                    <p class="text-gray-600 mb-4">
+                        Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Site to:
+                    </p>
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                        <li>Create and manage your account</li>
+                        <li>Process your transactions and send you related information</li>
+                        <li>Email you regarding your account or order</li>
+                        <li>Fulfill and manage purchases, orders, payments, and other transactions related to the Site</li>
+                        <li>Generate a personal profile about you to make future visits to the Site more personalized</li>
+                        <li>Increase the efficiency and operation of the Site</li>
+                        <li>Monitor and analyze usage and trends to improve your experience with the Site</li>
+                        <li>Notify you of updates to the Site</li>
+                        <li>Offer new products, services, and/or recommendations to you</li>
+                        <li>Perform other business activities as needed</li>
+                        <li>Request feedback and contact you about your use of the Site</li>
+                        <li>Resolve disputes and troubleshoot problems</li>
+                        <li>Respond to product and customer service requests</li>
+                    </ul>
+                </section>
+
+                <!-- Disclosure of Your Information -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-bold mb-4 text-dark">Disclosure of Your Information</h2>
+                    <p class="text-gray-600 mb-4">
+                        We may share information we have collected about you in certain situations. Your information may be disclosed as follows:
+                    </p>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-3 text-primary">By Law or to Protect Rights</h3>
+                        <p class="text-gray-600">
+                            If we believe the release of information about you is necessary to respond to legal process, to investigate or remedy potential violations of our policies, or to protect the rights, property, and safety of others, we may share your information as permitted or required by any applicable law, rule, or regulation.
+                        </p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-3 text-primary">Third-Party Service Providers</h3>
+                        <p class="text-gray-600">
+                            We may share your information with third parties that perform services for us or on our behalf, including payment processing, data analysis, email delivery, hosting services, customer service, and marketing assistance.
+                        </p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-3 text-primary">Business Transfers</h3>
+                        <p class="text-gray-600">
+                            We may share or transfer your information in connection with, or during negotiations of, any merger, sale of company assets, financing, or acquisition of all or a portion of our business to another company.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Tracking Technologies -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-bold mb-4 text-dark">Tracking Technologies</h2>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-3 text-primary">Cookies and Web Beacons</h3>
+                        <p class="text-gray-600 mb-3">
+                            We may use cookies, web beacons, tracking pixels, and other tracking technologies on the Site to help customize the Site and improve your experience. When you access the Site, your personal information is not collected through the use of tracking technology. Most browsers are set to accept cookies by default. You can remove or reject cookies, but be aware that such action could affect the availability and functionality of the Site.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-primary">Third-Party Tracking</h3>
+                        <p class="text-gray-600">
+                            Third parties may use cookies, web beacons, and similar technologies to collect or receive information from our website and elsewhere on the internet and use that information to provide measurement services and target ads. You can opt-out of the collection and use of information for ad targeting by visiting <a href="http://www.aboutads.info/choices" class="text-primary hover:underline">http://www.aboutads.info/choices</a>.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Policy for Children -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-bold mb-4 text-dark">Policy for Children</h2>
+                    <p class="text-gray-600">
+                        We do not knowingly solicit information from or market to children under the age of 13. If you become aware of any data we have collected from children under age 13, please contact us using the contact information provided below.
+                    </p>
+                </section>
+
+                <!-- Your Rights -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-bold mb-4 text-dark">Your Rights</h2>
+                    <p class="text-gray-600 mb-4">
+                        Depending on your location, you may have certain rights regarding your personal information, such as:
+                    </p>
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                        <li>The right to access personal information we hold about you</li>
+                        <li>The right to request that we correct or update your personal information</li>
+                        <li>The right to request deletion of your personal information</li>
+                        <li>The right to restrict or object to our processing of your personal information</li>
+                        <li>The right to data portability</li>
+                        <li>The right to withdraw consent (where processing is based on consent)</li>
+                    </ul>
+                </section>
+
+                <!-- Contact Us -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-bold mb-4 text-dark">Contact Us</h2>
+                    <p class="text-gray-600 mb-2">
+                        If you have questions or comments about this Privacy Policy, please contact us at:
+                    </p>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <p class="text-gray-600"><strong>GearBox Auto Parts</strong></p>
+                        <p class="text-gray-600">123 Auto Street, Detroit, MI</p>
+                        <p class="text-gray-600">Email: <a href="mailto:privacy@gearboxparts.com" class="text-primary hover:underline">privacy@gearboxparts.com</a></p>
+                        <p class="text-gray-600">Phone: (555) 123-4567</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-cogs text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+                    </div>
+                    <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2020.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition">Shop All</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition">FAQs</a></li>
+                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white transition">Shipping Policy</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-white transition">Returns</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-secondary"></i>
+                            123 Auto Street, Detroit, MI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-secondary"></i>
+                            (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-secondary"></i>
+                            support@gearbox.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 GearBox Auto Parts. All rights reserved
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle for privacy page
+        const mobileMenuBtnPrivacy = document.getElementById('mobileMenuBtnPrivacy');
+        const mobileMenuPrivacy = document.getElementById('mobileMenuPrivacy');
+        const menuIconPrivacy = document.getElementById('menuIconPrivacy');
+        
+        if (mobileMenuBtnPrivacy && mobileMenuPrivacy) {
+            mobileMenuBtnPrivacy.addEventListener('click', () => {
+                mobileMenuPrivacy.classList.toggle('hidden');
+                if (menuIconPrivacy) {
+                    if (mobileMenuPrivacy.classList.contains('hidden')) {
+                        menuIconPrivacy.className = 'fas fa-bars';
+                    } else {
+                        menuIconPrivacy.className = 'fas fa-times';
+                    }
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!mobileMenuPrivacy.contains(event.target) && 
+                    !mobileMenuBtnPrivacy.contains(event.target) && 
+                    !mobileMenuPrivacy.classList.contains('hidden')) {
+                    mobileMenuPrivacy.classList.add('hidden');
+                    if (menuIconPrivacy) {
+                        menuIconPrivacy.className = 'fas fa-bars';
+                    }
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const mobileLinks = mobileMenuPrivacy.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuPrivacy.classList.add('hidden');
+                    if (menuIconPrivacy) {
+                        menuIconPrivacy.className = 'fas fa-bars';
+                    }
+                });
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

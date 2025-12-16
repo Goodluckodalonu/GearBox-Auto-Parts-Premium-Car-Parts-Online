@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GearBox Auto Parts | Premium Car Parts Online</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Custom Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'primary': '#1e3a8a',
+            'secondary': '#f59e0b',
+            'accent': '#dc2626',
+            'light': '#f8fafc',
+            'dark': '#0f172a'
+          },
+          fontFamily: {
+            'sans': ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="font-sans bg-gray-50">
+
+  <!-- Navigation -->
+  <header class="sticky top-0 z-50 bg-white shadow-md">
+    <nav class="container mx-auto px-4 py-3">
+      <div class="flex items-center justify-between">
+
+        <!-- Logo -->
+        <div class="flex items-center space-x-2">
+          <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+            <i class="fas fa-cogs text-white text-xl"></i>
+          </div>
+          <a href="index.html" class="text-2xl font-bold text-dark">
+            Gear<span class="text-primary">Box</span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="index.html" class="font-medium text-dark hover:text-primary transition">Home</a>
+          <a href="products.html" class="font-medium text-dark hover:text-primary transition">Shop</a>
+          <a href="#categories" class="font-medium text-dark hover:text-primary transition">Categories</a>
+          <a href="about.html" class="font-medium text-dark hover:text-primary transition">About</a>
+          <a href="contact.html" class="font-medium text-dark hover:text-primary transition">Contact</a>
+        </div>
+
+        <!-- Cart & User -->
+        <div class="flex items-center space-x-4">
+          <!-- Cart Icon -->
+        <a href="cart.html" class="relative">
+          <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+          <span class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+      </a>
+      
+          <a href="wishlist.html" class="relative">
+            <i class="far fa-heart text-xl text-dark hover:text-accent"></i>
+            <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+        </a>
+  
+          <button id="mobile-menu-btn" class="md:hidden text-2xl">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="md:hidden mt-4 hidden">
+        <div class="flex flex-col space-y-3">
+          <a href="index.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Home</a>
+          <a href="products.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Shop</a>
+          <a href="#categories" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Categories</a>
+          <a href="about.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">About</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+<section class="relative text-white py-16 md:py-24 h-[100vh] overflow-hidden">
+  <!-- Background Image with Overlay -->
+  <div class="absolute inset-0 z-0">
+    <img 
+      src="/assets/images/photo-1606577924006-27d39b132ae2.avif" 
+      alt="High-performance automotive parts"
+      class="w-full h-full object-cover animate-gradient-x gradient-x"
+    >
+    <!-- Dark overlay for better text readability -->
+    <div class="absolute inset-0 bg-gradient-to-r from-dark/90 via-primary/60 to-dark/90 animate-gradient-x"></div>
+  </div>
+
+  <!-- Content Container -->
+  <div class="container mx-auto px-4 pt-16 relative z-10 text-center">
+    <div class="max-w-2xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">
+        Premium Auto Parts for <span class="text-secondary">Peak Performance</span>
+      </h1>
+      <p class="max-w-md mx-auto text-xl mb-8 text-gray-200">
+        Quality car parts, tools, and accessories with free shipping on orders over $100.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="products.html"
+          class="bg-secondary text-dark font-semibold px-8 py-3 rounded-lg hover:bg-yellow-500 transition transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
+          Shop Now <i class="ml-2 fas fa-arrow-right"></i>
+        </a>
+        <a href="#categories"
+          class="bg-transparent border-2 border-white text-white font-semibold px-8 py-3 rounded-lg hover:bg-white hover:text-dark transition shadow-lg hover:shadow-xl">
+          Browse Categories
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Features Section -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="text-center p-6 rounded-xl bg-light hover:shadow-lg transition">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-shipping-fast text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Free Delivery</h3>
+          <p class="text-gray-600">Free home delivery for all orders over $100</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="text-center p-6 rounded-xl bg-light hover:shadow-lg transition">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-award text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Quality Guaranteed</h3>
+          <p class="text-gray-600">We ensure product quality at all times</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="text-center p-6 rounded-xl bg-light hover:shadow-lg transition">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-headset text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Online Support</h3>
+          <p class="text-gray-600">24/7 customer support for all your needs</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center mb-10">
+        <h2 class="text-3xl font-bold text-dark">Featured Products</h2>
+        <a href="products.html" class="text-primary font-semibold hover:underline">
+          View All <i class="ml-1 fas fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div id="featured-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Products will be loaded by JavaScript -->
+        <div class="text-center py-12">
+          <div class="animate-pulse">
+            <div class="bg-gray-300 h-48 rounded-lg mb-4"></div>
+              <div class="h-4 bg-gray-300 rounded w-3/4 mx-auto mb-2"></div>
+            <div class="h-4 bg-gray-300 rounded w-1/2 mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+<section id="categories" class=" py-10 bg-white">
+  <div class="container mt-10 mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Shop By Category</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <a href="products.html?category=engine" class="category-card group">
+              <div
+                  class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center hover:shadow-xl transition duration-300 h-full flex flex-col items-center justify-center">
+                  <i class="fas fa-oil-can text-4xl text-primary mb-4 group-hover:scale-110 transition-transform"></i>
+                  <h3 class="font-bold text-lg">Engine Parts</h3>
+                  <p class="text-sm text-gray-600 mt-2">Performance components & fluids</p>
+              </div>
+          </a>
+          <a href="products.html?category=brakes" class="category-card group">
+              <div
+                  class="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 text-center hover:shadow-xl transition duration-300 h-full flex flex-col items-center justify-center">
+                  <i class="fas fa-tachometer-alt text-4xl text-accent mb-4 group-hover:scale-110 transition-transform"></i>
+                  <h3 class="font-bold text-lg">Brake System</h3>
+                  <p class="text-sm text-gray-600 mt-2">Pads, rotors, calipers & fluid</p>
+              </div>
+          </a>
+          <a href="products.html?category=suspension" class="category-card group">
+              <div
+                  class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 text-center hover:shadow-xl transition duration-300 h-full flex flex-col items-center justify-center">
+                  <i class="fas fa-car-side text-4xl text-green-600 mb-4 group-hover:scale-110 transition-transform"></i>
+                  <h3 class="font-bold text-lg">Suspension</h3>
+                  <p class="text-sm text-gray-600 mt-2">Coilovers, sway bars & control arms</p>
+              </div>
+          </a>
+          <a href="products.html?category=electrical" class="category-card group">
+              <div
+                  class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-6 text-center hover:shadow-xl transition duration-300 h-full flex flex-col items-center justify-center">
+                  <i class="fas fa-bolt text-4xl text-secondary mb-4 group-hover:scale-110 transition-transform"></i>
+                  <h3 class="font-bold text-lg">Electrical</h3>
+                  <p class="text-sm text-gray-600 mt-2">Lighting, batteries & ignition</p>
+              </div>
+          </a>
+          <a href="products.html?category=interior" class="category-card group">
+              <div
+                  class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 text-center hover:shadow-xl transition duration-300 h-full flex flex-col items-center justify-center">
+                  <i class="fas fa-chair text-4xl text-purple-600 mb-4 group-hover:scale-110 transition-transform"></i>
+                  <h3 class="font-bold text-lg">Interior</h3>
+                  <p class="text-sm text-gray-600 mt-2">Seats, steering wheels & gauges</p>
+              </div>
+          </a>
+      </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-4">
+            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+              <i class="fas fa-cogs text-white"></i>
+            </div>
+            <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+          </div>
+          <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2020.</p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+            <li><a href="products.html" class="text-gray-400 hover:text-white transition">Shop All</a></li>
+            <li><a href="#categories" class="text-gray-400 hover:text-white transition">Categories</a></li>
+            <li><a href="cart.html" class="text-gray-400 hover:text-white transition">My Cart</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold mb-4">Support</h3>
+          <ul class="space-y-2">
+            <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+            <li><a href="faq.html" class="text-gray-400 hover:text-white transition">FAQs</a></li>
+            <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white transition">Shipping Policy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">Returns</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li class="flex items-center">
+              <i class="fas fa-map-marker-alt mr-3 text-secondary"></i>
+              123 Auto Street, Detroit, MI
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-phone mr-3 text-secondary"></i>
+              (555) 123-4567
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-envelope mr-3 text-secondary"></i>
+              support@gearbox.com
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 GearBox Auto Parts. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript Files -->
+  <script src="script.js"></script>
+  <script src="cart.js"></script>
+</body>
+
+</html>

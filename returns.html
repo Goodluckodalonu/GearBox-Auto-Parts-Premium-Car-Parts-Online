@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Policy | GearBox Auto Parts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#f59e0b',
+                        'accent': '#dc2626',
+                        'light': '#f8fafc',
+                        'dark': '#0f172a'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Style for mobile menu and return process -->
+    <style>
+        #mobileMenuReturn {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        #mobileMenuReturn.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        
+        #mobileMenuReturn:not(.hidden) {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Return process steps */
+        .process-step {
+            position: relative;
+            padding-left: 4rem;
+        }
+        
+        .process-step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3rem;
+            height: 3rem;
+            background-color: #1e3a8a;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        
+        @media (max-width: 768px) {
+            .process-step {
+                padding-left: 0;
+                padding-top: 3.5rem;
+            }
+            
+            .process-step-number {
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        
+        /* Status badges */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-left: 0.5rem;
+        }
+        
+        /* Condition indicators */
+        .condition-indicator {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .condition-dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+        
+        /* Hover effects for return cards */
+        .return-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .return-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-dark">
+                        Gear<span class="text-primary">Box</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-dark hover:text-primary transition">Home</a>
+                    <a href="products.html" class="font-medium text-dark hover:text-primary transition">Shop</a>
+                    <a href="about.html" class="font-medium text-dark hover:text-primary transition">About</a>
+                    <a href="contact.html" class="font-medium text-dark hover:text-primary transition">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex">
+                        <a href="#" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark transition duration-[.3s]">
+                            Community
+                        </a>
+                    </div>
+                    
+                    <!-- Cart & Wishlist Icons for mobile -->
+                    <div class="flex items-center space-x-4 md:hidden">
+                        <a href="cart.html" class="relative">
+                            <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+                            <span class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                        
+                        <a href="wishlist.html" class="relative">
+                            <i class="far fa-heart text-xl text-dark hover:text-accent"></i>
+                            <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtnReturn" class="md:hidden text-2xl">
+                        <i id="menuIconReturn" class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenuReturn" class="md:hidden mt-4 hidden">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Home</a>
+                        <a href="products.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Shop</a>
+                        <a href="#categories" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Categories</a>
+                        <a href="about.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">About</a>
+                        <a href="contact.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Contact</a>
+                        <div class="pt-2 border-t">
+                            <a href="#" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition flex items-center">
+                                <i class="fas fa-users mr-2 text-primary"></i>
+                                Community
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-primary to-blue-800 rounded-2xl overflow-hidden mb-12">
+            <div class="px-8 py-16 md:px-16 md:py-24 text-white text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Return & Refund Policy</h1>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">Hassle-free returns for your auto parts purchases</p>
+                <p class="opacity-80 mt-2">Last Updated: December 16, 2025</p>
+            </div>
+        </div>
+
+        <!-- Key Return Info Cards -->
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <div class="bg-white p-8 rounded-2xl shadow-lg return-card">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-calendar-check text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-center">30-Day Returns</h3>
+                <p class="text-gray-600 text-center">Return most items within 30 days of delivery for a full refund.</p>
+                <p class="text-center mt-4">
+                    <span class="text-2xl font-bold text-primary">30 Days</span>
+                    <span class="text-gray-500 ml-2">return window</span>
+                </p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-lg return-card">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shipping-fast text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-center">Free Returns</h3>
+                <p class="text-gray-600 text-center">Free return shipping on defective items and wrong parts shipped.</p>
+                <p class="text-center mt-4">
+                    <span class="text-2xl font-bold text-primary">Free</span>
+                    <span class="text-gray-500 ml-2">on qualified returns</span>
+                </p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-lg return-card">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-clock text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-center">Fast Refunds</h3>
+                <p class="text-gray-600 text-center">Refunds processed within 3-5 business days after we receive your return.</p>
+                <p class="text-center mt-4">
+                    <span class="text-2xl font-bold text-primary">3-5 Days</span>
+                    <span class="text-gray-500 ml-2">refund processing</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Return Policy Content -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+            <div class="max-w-4xl mx-auto">
+                <!-- Quick Summary -->
+                <section class="mb-10 pb-10 border-b">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Policy Summary</h2>
+                    <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-info-circle text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-2 text-blue-800">At a Glance</h3>
+                                <ul class="space-y-2 text-blue-700">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2 text-green-500"></i>
+                                        <span><strong>Return Window:</strong> 30 days from delivery date</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2 text-green-500"></i>
+                                        <span><strong>Condition:</strong> Unused, in original packaging with all accessories</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2 text-green-500"></i>
+                                        <span><strong>Return Shipping:</strong> Free for defective/wrong items, customer-paid for change of mind</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2 text-green-500"></i>
+                                        <span><strong>Refund Method:</strong> Original payment method or store credit</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Return Process Steps -->
+                <section class="mb-10 pb-10 border-b">
+                    <h2 class="text-2xl font-bold mb-8 text-dark">How to Return an Item</h2>
+                    
+                    <div class="space-y-10">
+                        <!-- Step 1 -->
+                        <div class="process-step">
+                            <div class="process-step-number">1</div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-3 text-dark">Initiate Your Return</h3>
+                                <p class="text-gray-600 mb-4">
+                                    Start your return within 30 days of delivery by contacting our returns department or using our online portal.
+                                </p>
+                                <div class="bg-gray-50 p-5 rounded-lg">
+                                    <h4 class="font-bold mb-2">Required Information:</h4>
+                                    <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                        <li>Order number</li>
+                                        <li>Item(s) you wish to return</li>
+                                        <li>Reason for return</li>
+                                        <li>Photos of the item (for damaged/defective returns)</li>
+                                    </ul>
+                                    <div class="mt-4 flex flex-wrap gap-3">
+                                        <a href="contact.html" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition flex items-center">
+                                            <i class="fas fa-envelope mr-2"></i>
+                                            Email Returns
+                                        </a>
+                                        <a href="tel:5551234569" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition flex items-center">
+                                            <i class="fas fa-phone mr-2"></i>
+                                            Call: (555) 123-4569
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="process-step">
+                            <div class="process-step-number">2</div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-3 text-dark">Package Your Item</h3>
+                                <p class="text-gray-600 mb-4">
+                                    Proper packaging ensures your return is processed quickly and without issues.
+                                </p>
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="bg-green-50 p-5 rounded-lg">
+                                        <h4 class="font-bold mb-3 text-green-800 flex items-center">
+                                            <i class="fas fa-check-circle mr-2"></i>
+                                            Do Include
+                                        </h4>
+                                        <ul class="space-y-2 text-green-700">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check mt-1 mr-2 text-sm"></i>
+                                                <span>Original packaging and boxes</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check mt-1 mr-2 text-sm"></i>
+                                                <span>All accessories and manuals</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check mt-1 mr-2 text-sm"></i>
+                                                <span>Return authorization form</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check mt-1 mr-2 text-sm"></i>
+                                                <span>Protective padding for fragile items</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="bg-red-50 p-5 rounded-lg">
+                                        <h4 class="font-bold mb-3 text-red-800 flex items-center">
+                                            <i class="fas fa-times-circle mr-2"></i>
+                                            Don't Include
+                                        </h4>
+                                        <ul class="space-y-2 text-red-700">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-times mt-1 mr-2 text-sm"></i>
+                                                <span>Personal notes or extra items</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-times mt-1 mr-2 text-sm"></i>
+                                                <span>Tape directly on product packaging</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-times mt-1 mr-2 text-sm"></i>
+                                                <span>Used consumables (fluids, filters)</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-times mt-1 mr-2 text-sm"></i>
+                                                <span>Items without RMA number</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div class="process-step">
+                            <div class="process-step-number">3</div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-3 text-dark">Ship Your Return</h3>
+                                <p class="text-gray-600 mb-4">
+                                    Once you receive your Return Merchandise Authorization (RMA) and shipping label, send your package back to us.
+                                </p>
+                                <div class="bg-blue-50 p-5 rounded-lg">
+                                    <h4 class="font-bold mb-3">Shipping Instructions:</h4>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <h5 class="font-semibold mb-1">For Free Returns (Defective/Wrong Items):</h5>
+                                            <p class="text-gray-600 text-sm">We'll email you a prepaid shipping label. Print it and attach to your package. Drop off at any UPS or FedEx location.</p>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold mb-1">For Customer-Paid Returns (Change of Mind):</h5>
+                                            <p class="text-gray-600 text-sm">You'll receive an RMA number. Ship using any carrier and insure the package for its full value. Send to our returns address provided in your RMA email.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 p-4 bg-yellow-50 rounded">
+                                        <p class="text-sm text-yellow-800"><i class="fas fa-exclamation-triangle mr-2"></i><strong>Important:</strong> Always include your RMA number inside the package. Returns without RMA numbers may experience significant delays.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4 -->
+                        <div class="process-step">
+                            <div class="process-step-number">4</div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-3 text-dark">Receive Your Refund</h3>
+                                <p class="text-gray-600 mb-4">
+                                    Once we receive and inspect your return, we'll process your refund.
+                                </p>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full border-collapse">
+                                        <thead>
+                                            <tr class="bg-gray-50">
+                                                <th class="text-left p-4 border-b">Refund Type</th>
+                                                <th class="text-left p-4 border-b">Processing Time</th>
+                                                <th class="text-left p-4 border-b">How It Works</th>
+                                                <th class="text-left p-4 border-b">Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b hover:bg-gray-50">
+                                                <td class="p-4 font-semibold">Credit Card Refund</td>
+                                                <td class="p-4">5-10 business days</td>
+                                                <td class="p-4">Refunded to original payment method</td>
+                                                <td class="p-4">
+                                                    <span class="status-badge bg-green-100 text-green-800">Most Common</span>
+                                                </td>
+                                            </tr>
+                                            <tr class="border-b hover:bg-gray-50">
+                                                <td class="p-4 font-semibold">PayPal Refund</td>
+                                                <td class="p-4">2-5 business days</td>
+                                                <td class="p-4">Refunded to your PayPal account</td>
+                                                <td class="p-4">Instant in some cases</td>
+                                            </tr>
+                                            <tr class="border-b hover:bg-gray-50">
+                                                <td class="p-4 font-semibold">Store Credit</td>
+                                                <td class="p-4">24-48 hours</td>
+                                                <td class="p-4">Added to your GearBox account</td>
+                                                <td class="p-4">
+                                                    <span class="status-badge bg-blue-100 text-blue-800">+10% Bonus</span>
+                                                </td>
+                                            </tr>
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="p-4 font-semibold">Check Refund</td>
+                                                <td class="p-4">7-14 business days</td>
+                                                <td class="p-4">Mailed to billing address</td>
+                                                <td class="p-4">For certain payment methods only</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p class="text-sm text-gray-500 mt-4">You'll receive an email notification when your refund is issued. The timing of when funds appear in your account depends on your financial institution.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Return Conditions & Eligibility -->
+                <section class="mb-10 pb-10 border-b">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Return Conditions & Eligibility</h2>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4 text-primary">Item Condition Requirements</h3>
+                        <p class="text-gray-600 mb-4">To be eligible for a return, your item must meet the following conditions:</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-white border border-gray-200 p-5 rounded-lg">
+                                <h4 class="font-bold mb-3 text-green-700">Acceptable Condition</h4>
+                                <div class="space-y-3">
+                                    <div class="condition-indicator">
+                                        <div class="condition-dot bg-green-500"></div>
+                                        <span>Unused and in original condition</span>
+                                    </div>
+                                    <div class="condition-indicator">
+                                        <div class="condition-dot bg-green-500"></div>
+                                        <span>Original packaging intact</span>
+                                    </div>
+                                    <div class="condition-indicator">
+                                        <div class="condition-dot bg-green-500"></div>
+                                        <span>All tags, labels, and accessories included</span>
+                                    </div>
+                                    <div class="condition-indicator">
+                                        <div class="condition-dot bg-green-500"></div>
+                                        <span>No signs of installation or use</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white border border-gray-200 p-5 rounded-lg">
+                                <h4 class="font-bold mb-3 text-red-700">Not Acceptable</h4>
+                                <div class="space-y-3">
+                                    <div class="condition-indicator">
+                                        <div class="condition-dot bg-red-500"></div>
+                                        <span>Installed or used items</span>
+                                    </div>
+                                    <div class="condition-indicator">
+                                        <div class="condition-dot bg-red-500"></div>
+                                        <span>Damaged or altered packaging</span>
+                                    </div>
+                                    <div class="condition-indicator">
+                                        <div class="condition-dot bg-red-500"></div>
+                                        <span>Missing accessories or parts</span>
+                                    </div>
+                                    <div class="condition-indicator">
+                                        <div class="condition-dot bg-red-500"></div>
+                                        <span>Items purchased more than 30 days ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Special Cases -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-primary">Special Cases & Exceptions</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-yellow-50 p-5 rounded-lg">
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                        <i class="fas fa-exclamation-triangle text-yellow-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-2">Defective or Damaged Items</h4>
+                                        <p class="text-gray-600 mb-2">If you receive a defective or damaged item, contact us within 48 hours of delivery. We'll arrange a free return and replacement.</p>
+                                        <ul class="list-disc pl-5 text-gray-600 text-sm">
+                                            <li>Provide photos of the damage/defect</li>
+                                            <li>Keep all original packaging</li>
+                                            <li>Do not attempt to install or repair</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-5 rounded-lg">
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                        <i class="fas fa-tools text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-2">Wrong Item Shipped</h4>
+                                        <p class="text-gray-600 mb-2">If you receive the wrong item, contact us immediately. We'll provide a prepaid return label and expedite the correct item.</p>
+                                        <ul class="list-disc pl-5 text-gray-600 text-sm">
+                                            <li>Check part numbers against your order</li>
+                                            <li>Do not open if it's clearly the wrong item</li>
+                                            <li>We'll provide overnight shipping for the correct part</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-red-50 p-5 rounded-lg">
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                        <i class="fas fa-ban text-red-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-2">Non-Returnable Items</h4>
+                                        <p class="text-gray-600 mb-2">Certain items cannot be returned for safety or hygienic reasons:</p>
+                                        <div class="grid md:grid-cols-2 gap-4 mt-3">
+                                            <ul class="list-disc pl-5 text-gray-600 text-sm">
+                                                <li>Opened fluids (oil, coolant, brake fluid)</li>
+                                                <li>Used filters (oil, air, fuel)</li>
+                                                <li>Custom or special-order parts</li>
+                                            </ul>
+                                            <ul class="list-disc pl-5 text-gray-600 text-sm">
+                                                <li>Electrical items with cut/tampered wires</li>
+                                                <li>Software or digital products</li>
+                                                <li>Clearance or final sale items</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Exchanges -->
+                <section class="mb-10 pb-10 border-b">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Exchanges</h2>
+                    
+                    <div class="bg-white border border-gray-200 rounded-lg p-6 mb-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-exchange-alt text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-3">Need a Different Size or Part?</h3>
+                                <p class="text-gray-600 mb-4">
+                                    We make exchanges easy. If you need a different size or compatible part, follow these steps:
+                                </p>
+                                <ol class="list-decimal pl-5 space-y-2 text-gray-600">
+                                    <li>Contact our returns department with your order number</li>
+                                    <li>Specify which item you want to exchange and for what</li>
+                                    <li>Our team will verify compatibility and availability</li>
+                                    <li>We'll process an exchange order and provide return instructions</li>
+                                    <li>Once we receive your return, we'll ship the replacement</li>
+                                </ol>
+                                <div class="mt-6 p-4 bg-blue-50 rounded">
+                                    <p class="text-sm text-blue-800"><i class="fas fa-lightbulb mr-2"></i><strong>Pro Tip:</strong> Contact our technical support team at <span class="font-semibold">(555) 123-4568</span> before exchanging to ensure you get the right part for your vehicle.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Exchange Options -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-5 rounded-lg">
+                            <h4 class="font-bold mb-3">Standard Exchange</h4>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Processed after we receive your return</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>No additional shipping charges if same value</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Standard shipping time for replacement</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-5 rounded-lg">
+                            <h4 class="font-bold mb-3">Advanced Exchange</h4>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>We ship replacement immediately</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Requires credit card authorization hold</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Overnight shipping available</span>
+                                </li>
+                            </ul>
+                            <p class="text-sm text-gray-500 mt-3">Contact returns department to request advanced exchange.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Restocking Fees -->
+                <section class="mb-10 pb-10 border-b">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Restocking Fees</h2>
+                    
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="text-left p-4 border-b">Return Reason</th>
+                                    <th class="text-left p-4 border-b">Restocking Fee</th>
+                                    <th class="text-left p-4 border-b">Return Shipping</th>
+                                    <th class="text-left p-4 border-b">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-4 font-semibold">Defective Item</td>
+                                    <td class="p-4 text-green-600 font-bold">0%</td>
+                                    <td class="p-4">Free (we provide label)</td>
+                                    <td class="p-4">Full refund or replacement</td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-4 font-semibold">Wrong Item Shipped</td>
+                                    <td class="p-4 text-green-600 font-bold">0%</td>
+                                    <td class="p-4">Free (we provide label)</td>
+                                    <td class="p-4">Expedited shipping for correct item</td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-4 font-semibold">Change of Mind</td>
+                                    <td class="p-4 text-yellow-600 font-bold">15%</td>
+                                    <td class="p-4">Customer pays</td>
+                                    <td class="p-4">Item must be unopened and unused</td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-4 font-semibold">Opened/Installed Item</td>
+                                    <td class="p-4 text-red-600 font-bold">25-50%</td>
+                                    <td class="p-4">Customer pays</td>
+                                    <td class="p-4">Subject to inspection and approval</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-4 font-semibold">Special Order Items</td>
+                                    <td class="p-4 text-red-600 font-bold">25% minimum</td>
+                                    <td class="p-4">Customer pays both ways</td>
+                                    <td class="p-4">May not be returnable - check before ordering</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="bg-yellow-50 p-5 rounded-lg">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-percentage text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Avoiding Restocking Fees</h4>
+                                <p class="text-gray-600 mb-3">To avoid restocking fees:</p>
+                                <ul class="list-disc pl-5 text-gray-600">
+                                    <li>Verify vehicle compatibility before ordering using our VIN lookup tool</li>
+                                    <li>Contact technical support for installation questions</li>
+                                    <li>Return items in original, unopened condition</li>
+                                    <li>Initiate returns within 30 days of delivery</li>
+                                </ul>
+                                <p class="mt-4 text-sm text-gray-500">Restocking fees help cover the costs of inspecting, restocking, and potentially remarketing returned items.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact & Support -->
+                <section class="pt-8">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Return Support & Contact</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="font-bold mb-4">Returns Department</h3>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-center">
+                                    <i class="fas fa-phone-alt text-primary mr-3"></i>
+                                    <span><strong>Phone:</strong> (555) 123-4569 (Returns line)</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-envelope text-primary mr-3"></i>
+                                    <span><strong>Email:</strong> returns@gearboxparts.com</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-clock text-primary mr-3"></i>
+                                    <span><strong>Hours:</strong> Mon-Fri 8AM-6PM EST</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-map-marker-alt text-primary mr-3"></i>
+                                    <span><strong>Returns Address:</strong><br>
+                                    GearBox Returns<br>
+                                    456 Return Avenue<br>
+                                    Detroit, MI 48201</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-primary/5 p-6 rounded-lg">
+                            <h3 class="font-bold mb-4">Need Help Before Returning?</h3>
+                            <p class="text-gray-600 mb-4">Our technical support team can help with:</p>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Vehicle compatibility verification</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Installation guidance</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Troubleshooting defective items</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Finding the correct replacement part</span>
+                                </li>
+                            </ul>
+                            <div class="mt-6">
+                                <a href="tel:5551234568" class="inline-flex items-center text-primary font-semibold hover:underline">
+                                    <i class="fas fa-tools mr-2"></i>
+                                    Technical Support: (555) 123-4568
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Status Check -->
+                    <div class="mt-8 bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-lg">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between">
+                            <div>
+                                <h3 class="font-bold mb-2">Check Your Return Status</h3>
+                                <p class="text-gray-600">Already sent your return? Check its status online.</p>
+                            </div>
+                            <div class="mt-4 md:mt-0">
+                                <a href="order tracking.html" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition flex items-center">
+                                    <i class="fas fa-search mr-2"></i>
+                                    Track My Return
+                                </a>
+                                <p class="text-xs text-gray-500 mt-2">Enter your RMA number and order email</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-gradient-to-r from-secondary to-orange-500 rounded-2xl p-8 md:p-12 text-center text-white mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Questions About Your Return?</h2>
+            <p class="text-xl opacity-90 mb-6 max-w-2xl mx-auto">Our returns team is here to help make the process smooth and easy</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="bg-white text-dark font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition transform hover:-translate-y-1">
+                    Contact Returns Department
+                </a>
+                <a href="faq.html" class="bg-transparent border-2 border-white text-white font-bold px-8 py-3 rounded-lg hover:bg-white hover:text-dark transition">
+                    Visit FAQs
+                </a>
+            </div>
+            <p class="mt-6 text-sm opacity-80">
+                <i class="fas fa-phone mr-2"></i>Returns Hotline: (555) 123-4569 | 
+                <i class="fas fa-envelope ml-4 mr-2"></i>returns@gearboxparts.com
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-cogs text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+                    </div>
+                    <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2020.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition">Shop All</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Policies</h3>
+                    <ul class="space-y-2">
+                      <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                      <li><a href="faq.html" class="text-gray-400 hover:text-white">FAQs</a></li>
+                      <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white">Shipping Policy</a></li>
+                      <li><a href="returns.html" class="text-gray-400 hover:text-white">Returns</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-secondary"></i>
+                            123 Auto Street, Detroit, MI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-secondary"></i>
+                            (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-secondary"></i>
+                            support@gearbox.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 GearBox Auto Parts. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle for return page
+        const mobileMenuBtnReturn = document.getElementById('mobileMenuBtnReturn');
+        const mobileMenuReturn = document.getElementById('mobileMenuReturn');
+        const menuIconReturn = document.getElementById('menuIconReturn');
+        
+        if (mobileMenuBtnReturn && mobileMenuReturn) {
+            mobileMenuBtnReturn.addEventListener('click', () => {
+                mobileMenuReturn.classList.toggle('hidden');
+                if (menuIconReturn) {
+                    if (mobileMenuReturn.classList.contains('hidden')) {
+                        menuIconReturn.className = 'fas fa-bars';
+                    } else {
+                        menuIconReturn.className = 'fas fa-times';
+                    }
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!mobileMenuReturn.contains(event.target) && 
+                    !mobileMenuBtnReturn.contains(event.target) && 
+                    !mobileMenuReturn.classList.contains('hidden')) {
+                    mobileMenuReturn.classList.add('hidden');
+                    if (menuIconReturn) {
+                        menuIconReturn.className = 'fas fa-bars';
+                    }
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const mobileLinks = mobileMenuReturn.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuReturn.classList.add('hidden');
+                    if (menuIconReturn) {
+                        menuIconReturn.className = 'fas fa-bars';
+                    }
+                });
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

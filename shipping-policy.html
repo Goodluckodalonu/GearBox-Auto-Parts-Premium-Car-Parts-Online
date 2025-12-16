@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Policy | GearBox Auto Parts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a8a',
+                        'secondary': '#f59e0b',
+                        'accent': '#dc2626',
+                        'light': '#f8fafc',
+                        'dark': '#0f172a'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Style for mobile menu -->
+    <style>
+        #mobileMenuShipping {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        #mobileMenuShipping.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        
+        #mobileMenuShipping:not(.hidden) {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Shipping info cards hover effect */
+        .shipping-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .shipping-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Timeline styling */
+        .timeline-step {
+            position: relative;
+        }
+        
+        .timeline-step:not(:last-child):after {
+            content: '';
+            position: absolute;
+            right: -1.5rem;
+            top: 2rem;
+            width: 2px;
+            height: calc(100% - 2rem);
+            background-color: #e5e7eb;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-step:not(:last-child):after {
+                display: none;
+            }
+        }
+        
+        /* Badge styling */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-dark">
+                        Gear<span class="text-primary">Box</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium text-dark hover:text-primary transition">Home</a>
+                    <a href="products.html" class="font-medium text-dark hover:text-primary transition">Shop</a>
+                    <a href="about.html" class="font-medium text-dark hover:text-primary transition">About</a>
+                    <a href="contact.html" class="font-medium text-dark hover:text-primary transition">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex">
+                        <a href="#" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark transition duration-[.3s]">
+                            Community
+                        </a>
+                    </div>
+                    
+                    <!-- Cart & Wishlist Icons for mobile -->
+                    <div class="flex items-center space-x-4 md:hidden">
+                        <a href="cart.html" class="relative">
+                            <i class="fas fa-shopping-cart text-xl text-dark hover:text-primary"></i>
+                            <span class="cart-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                        
+                        <a href="wishlist.html" class="relative">
+                            <i class="far fa-heart text-xl text-dark hover:text-accent"></i>
+                            <span class="wishlist-count absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtnShipping" class="md:hidden text-2xl">
+                        <i id="menuIconShipping" class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenuShipping" class="md:hidden mt-4 hidden">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Home</a>
+                        <a href="products.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Shop</a>
+                        <a href="#categories" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Categories</a>
+                        <a href="about.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">About</a>
+                        <a href="contact.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Contact</a>
+                        <div class="pt-2 border-t">
+                            <a href="#" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition flex items-center">
+                                <i class="fas fa-users mr-2 text-primary"></i>
+                                Community
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-r from-primary to-blue-800 rounded-2xl overflow-hidden mb-12">
+            <div class="px-8 py-16 md:px-16 md:py-24 text-white text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Shipping Policy</h1>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">Fast, reliable delivery for all your auto parts needs</p>
+                <p class="opacity-80 mt-2">Last Updated: December 16, 2025</p>
+            </div>
+        </div>
+
+        <!-- Key Shipping Information Cards -->
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <div class="bg-white p-8 rounded-2xl shadow-lg shipping-card">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shipping-fast text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-center">Free Shipping</h3>
+                <p class="text-gray-600 text-center">Free standard shipping on all orders over $100 within the continental US.</p>
+                <p class="text-center mt-4">
+                    <span class="text-2xl font-bold text-primary">$100+</span>
+                    <span class="text-gray-500 ml-2">order minimum</span>
+                </p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-lg shipping-card">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-clock text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-center">Fast Delivery</h3>
+                <p class="text-gray-600 text-center">Most orders ship within 24 hours and arrive in 3-5 business days.</p>
+                <p class="text-center mt-4">
+                    <span class="text-2xl font-bold text-primary">3-5 Days</span>
+                    <span class="text-gray-500 ml-2">standard delivery</span>
+                </p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-lg shipping-card">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-map-marker-alt text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-center">Nationwide Coverage</h3>
+                <p class="text-gray-600 text-center">We ship to all 50 states with reliable carriers you can track.</p>
+                <p class="text-center mt-4">
+                    <span class="text-2xl font-bold text-primary">50 States</span>
+                    <span class="text-gray-500 ml-2">served</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Shipping Policy Content -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+            <div class="max-w-4xl mx-auto">
+                <!-- Processing Time -->
+                <section class="mb-10 pb-10 border-b">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Order Processing Time</h2>
+                    <p class="text-gray-600 mb-6">
+                        All orders are processed within <span class="font-semibold">1-2 business days</span> (Monday through Friday, excluding holidays). Orders placed after 2 PM EST will be processed the next business day.
+                    </p>
+                    
+                    <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                        <h3 class="text-lg font-bold mb-4 text-primary">Processing Timeline:</h3>
+                        <div class="grid md:grid-cols-4 gap-4">
+                            <div class="text-center timeline-step">
+                                <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <h4 class="font-bold mb-1">Order Placed</h4>
+                                <p class="text-sm text-gray-600">Within minutes</p>
+                            </div>
+                            
+                            <div class="text-center timeline-step">
+                                <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h4 class="font-bold mb-1">Order Confirmed</h4>
+                                <p class="text-sm text-gray-600">1-2 hours</p>
+                            </div>
+                            
+                            <div class="text-center timeline-step">
+                                <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <h4 class="font-bold mb-1">Order Processed</h4>
+                                <p class="text-sm text-gray-600">1-2 business days</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-shipping-fast"></i>
+                                </div>
+                                <h4 class="font-bold mb-1">Order Shipped</h4>
+                                <p class="text-sm text-gray-600">Shipped within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Shipping Methods & Rates -->
+                <section class="mb-10 pb-10 border-b">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Shipping Methods & Rates</h2>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="text-left p-4 border-b">Shipping Method</th>
+                                    <th class="text-left p-4 border-b">Delivery Time</th>
+                                    <th class="text-left p-4 border-b">Cost</th>
+                                    <th class="text-left p-4 border-b">Best For</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-4">
+                                        <div class="font-bold">Standard Shipping</div>
+                                        <div class="text-sm text-gray-600">UPS Ground / FedEx Ground</div>
+                                    </td>
+                                    <td class="p-4">3-7 business days</td>
+                                    <td class="p-4">
+                                        <span class="font-bold text-primary">$9.99</span>
+                                        <div class="text-sm text-green-600">FREE on orders over $100</div>
+                                    </td>
+                                    <td class="p-4">
+                                        <span class="badge bg-green-100 text-green-800">Most Popular</span>
+                                        <div class="text-sm text-gray-600 mt-1">Regular shipments</div>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-4">
+                                        <div class="font-bold">Express Shipping</div>
+                                        <div class="text-sm text-gray-600">UPS 2-Day Air / FedEx 2Day</div>
+                                    </td>
+                                    <td class="p-4">2 business days</td>
+                                    <td class="p-4">
+                                        <span class="font-bold text-primary">$19.99</span>
+                                    </td>
+                                    <td class="p-4">
+                                        <div class="text-sm text-gray-600">Faster delivery needed</div>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-4">
+                                        <div class="font-bold">Overnight Shipping</div>
+                                        <div class="text-sm text-gray-600">UPS Next Day / FedEx Overnight</div>
+                                    </td>
+                                    <td class="p-4">1 business day</td>
+                                    <td class="p-4">
+                                        <span class="font-bold text-primary">$34.99</span>
+                                    </td>
+                                    <td class="p-4">
+                                        <span class="badge bg-blue-100 text-blue-800">Urgent</span>
+                                        <div class="text-sm text-gray-600 mt-1">Emergency repairs</div>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="hover:bg-gray-50">
+                                    <td class="p-4">
+                                        <div class="font-bold">Local Pickup</div>
+                                        <div class="text-sm text-gray-600">Detroit Store</div>
+                                    </td>
+                                    <td class="p-4">Same day*</td>
+                                    <td class="p-4">
+                                        <span class="font-bold text-primary">FREE</span>
+                                    </td>
+                                    <td class="p-4">
+                                        <div class="text-sm text-gray-600">Local customers</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-sm text-gray-500 mt-4">*Local pickup available for orders placed before 2 PM EST. You'll receive an email when your order is ready for pickup.</p>
+                    </div>
+                </section>
+
+                <!-- Shipping Destinations -->
+                <section class="mb-10 pb-10 border-b">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Shipping Destinations</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4 text-primary">United States</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                    <span>Continental US (48 states)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                    <span>Alaska & Hawaii</span>
+                                    <span class="ml-2 badge bg-yellow-100 text-yellow-800">Additional fees apply</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                    <span>Puerto Rico & US Territories</span>
+                                    <span class="ml-2 badge bg-yellow-100 text-yellow-800">Extended delivery</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4 text-primary">International Shipping</h3>
+                            <p class="text-gray-600 mb-4">
+                                We currently ship to Canada only for international orders. Additional customs fees and taxes may apply.
+                            </p>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span>Canada</span>
+                                <span class="ml-2 badge bg-blue-100 text-blue-800">7-14 days delivery</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-4">
+                                For shipping to other countries, please <a href="contact.html" class="text-primary hover:underline">contact us</a> for a custom quote.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Order Tracking -->
+                <section class="mb-10 pb-10 border-b">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Order Tracking</h2>
+                    
+                    <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-map-pin text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-2">Track Your Order</h3>
+                                <p class="text-gray-600 mb-4">
+                                    Once your order ships, you'll receive a confirmation email with tracking information. You can also track your order by:
+                                </p>
+                                <div class="flex flex-wrap gap-4">
+                                    <a href="#" class="bg-white border border-blue-200 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-user-circle mr-2"></i>
+                                        Your Account
+                                    </a>
+                                    <a href="#" class="bg-white border border-blue-200 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-envelope mr-2"></i>
+                                        Order Confirmation Email
+                                    </a>
+                                    <a href="contact.html" class="bg-white border border-blue-200 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-headset mr-2"></i>
+                                        Contact Support
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Shipping Restrictions -->
+                <section class="mb-10 pb-10 border-b">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Shipping Restrictions</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4 text-primary">Restricted Items</h3>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-yellow-500 mr-3 mt-1"></i>
+                                    <span>Hazardous materials (certain fluids, batteries)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-yellow-500 mr-3 mt-1"></i>
+                                    <span>Oversized items (some body panels, bumpers)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-yellow-500 mr-3 mt-1"></i>
+                                    <span>International restrictions may apply for certain parts</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4 text-primary">Special Handling</h3>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-box text-blue-500 mr-3 mt-1"></i>
+                                    <span>Fragile items marked with special packaging</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-weight text-blue-500 mr-3 mt-1"></i>
+                                    <span>Heavy items (engine blocks, transmissions) may have additional shipping fees</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-temperature-high text-blue-500 mr-3 mt-1"></i>
+                                    <span>Temperature-sensitive items shipped with climate control</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Delivery Issues -->
+                <section class="mb-10">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Delivery Issues & Support</h2>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-red-50 p-6 rounded-lg">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-exclamation-circle text-red-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold mb-2">Damaged or Lost Packages</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        If your package arrives damaged or is lost in transit, please contact us within 48 hours of delivery (or expected delivery date for lost packages). We'll work with the carrier to resolve the issue and send replacements as needed.
+                                    </p>
+                                    <a href="contact.html" class="inline-flex items-center text-red-700 font-semibold hover:underline">
+                                        Report an Issue <i class="ml-2 fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 p-6 rounded-lg">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold mb-2">Delivery Delays</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        While we make every effort to deliver orders on time, occasional delays may occur due to weather, carrier issues, or high order volumes. You'll be notified if your order is significantly delayed.
+                                    </p>
+                                    <p class="text-sm text-gray-500">
+                                        Delivery estimates are not guaranteed during holiday seasons or severe weather events.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 p-6 rounded-lg">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-undo-alt text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold mb-2">Address Changes</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Need to change your shipping address? Contact us immediately if your order hasn't shipped yet. Once an order has shipped, address changes may not be possible and could result in additional fees.
+                                    </p>
+                                    <a href="contact.html" class="inline-flex items-center text-green-700 font-semibold hover:underline">
+                                        Request Address Change <i class="ml-2 fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Information -->
+                <section class="pt-8 border-t">
+                    <h2 class="text-2xl font-bold mb-6 text-dark">Need Help With Shipping?</h2>
+                    <p class="text-gray-600 mb-6">
+                        Our customer service team is here to help with any shipping questions or concerns.
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="font-bold mb-3">Shipping Support Hours</h3>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex justify-between">
+                                    <span>Monday-Friday:</span>
+                                    <span class="font-semibold">8AM-8PM EST</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span>Saturday:</span>
+                                    <span class="font-semibold">9AM-5PM EST</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span>Sunday:</span>
+                                    <span class="font-semibold">10AM-4PM EST</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-primary/5 p-6 rounded-lg">
+                            <h3 class="font-bold mb-3">Contact Shipping Support</h3>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-center">
+                                    <i class="fas fa-phone-alt text-primary mr-3"></i>
+                                    <span>(555) 123-4569 (Shipping Department)</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-envelope text-primary mr-3"></i>
+                                    <span>shipping@gearboxparts.com</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-comments text-primary mr-3"></i>
+                                    <span>Live Chat: Available on website</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-gradient-to-r from-secondary to-orange-500 rounded-2xl p-8 md:p-12 text-center text-white mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Ready to Order?</h2>
+            <p class="text-xl opacity-90 mb-6 max-w-2xl mx-auto">Enjoy fast, reliable shipping on thousands of auto parts</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="products.html" class="bg-white text-dark font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition transform hover:-translate-y-1">
+                    Shop Now <i class="ml-2 fas fa-arrow-right"></i>
+                </a>
+                <a href="contact.html" class="bg-transparent border-2 border-white text-white font-bold px-8 py-3 rounded-lg hover:bg-white hover:text-dark transition">
+                    Contact Shipping Support
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-cogs text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Gear<span class="text-secondary">Box</span></span>
+                    </div>
+                    <p class="text-gray-400">Premium auto parts for enthusiasts and professionals since 2020.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition">Shop All</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Policies</h3>
+                    <ul class="space-y-2">
+                      <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition">FAQs</a></li>
+                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white transition font-semibold">Shipping Policy</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-white transition">Return</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-secondary"></i>
+                            123 Auto Street, Detroit, MI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-secondary"></i>
+                            (555) 123-4567
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-secondary"></i>
+                            support@gearbox.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 GearBox Auto Parts. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle for shipping page
+        const mobileMenuBtnShipping = document.getElementById('mobileMenuBtnShipping');
+        const mobileMenuShipping = document.getElementById('mobileMenuShipping');
+        const menuIconShipping = document.getElementById('menuIconShipping');
+        
+        if (mobileMenuBtnShipping && mobileMenuShipping) {
+            mobileMenuBtnShipping.addEventListener('click', () => {
+                mobileMenuShipping.classList.toggle('hidden');
+                if (menuIconShipping) {
+                    if (mobileMenuShipping.classList.contains('hidden')) {
+                        menuIconShipping.className = 'fas fa-bars';
+                    } else {
+                        menuIconShipping.className = 'fas fa-times';
+                    }
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!mobileMenuShipping.contains(event.target) && 
+                    !mobileMenuBtnShipping.contains(event.target) && 
+                    !mobileMenuShipping.classList.contains('hidden')) {
+                    mobileMenuShipping.classList.add('hidden');
+                    if (menuIconShipping) {
+                        menuIconShipping.className = 'fas fa-bars';
+                    }
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const mobileLinks = mobileMenuShipping.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuShipping.classList.add('hidden');
+                    if (menuIconShipping) {
+                        menuIconShipping.className = 'fas fa-bars';
+                    }
+                });
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
