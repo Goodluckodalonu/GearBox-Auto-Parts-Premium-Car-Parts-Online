@@ -102,7 +102,6 @@ class ShoppingCart {
       shippingElement.textContent = shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`;
       totalElement.textContent = `$${total.toFixed(2)}`;
       
-      // Update cart count in header
       this.updateHeaderCartCount();
   }
   
@@ -115,7 +114,6 @@ class ShoppingCart {
           element.textContent = totalItems;
       });
       
-      // Save to localStorage
       localStorage.setItem('cart', JSON.stringify(this.cart));
   }
   
@@ -192,11 +190,8 @@ class ShoppingCart {
           return;
       }
       
-      // In a real app, this would redirect to checkout page
-      // For demo, we'll just show a message
       alert(`Proceeding to checkout with ${this.cart.length} item(s). Total: $${this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)}`);
       
-      // For demo purposes, we'll clear the cart
       // this.clearCart();
       window.location.href = 'checkout.html';
   }
@@ -206,4 +201,5 @@ class ShoppingCart {
 // Initialize cart when page loads
 document.addEventListener('DOMContentLoaded', () => {
   window.shoppingCart = new ShoppingCart();
+  console.log('started:ShoppingCart')
 });
