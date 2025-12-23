@@ -181,8 +181,9 @@
                 
                 <div class="flex items-center space-x-4">
                     <div class="hidden md:flex">
-                        <a href="#" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark transition duration-[.3s]">
+                        <a role="link" aria-disabled="true" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark cursor-not-allowed transition duration-[.3s]">
                             Community
+                            <span class="absolute -top-2 -right-2 bg-red-600 text-white text-md rounded px-2 h-5 flex items-center justify-center">Soon</span>
                         </a>
                     </div>
                     
@@ -216,9 +217,9 @@
                         <a href="about.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">About</a>
                         <a href="contact.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Contact</a>
                         <div class="pt-2 border-t">
-                            <a href="#" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition flex items-center">
-                                <i class="fas fa-users mr-2 text-primary"></i>
+                            <a role="link" aria-disabled="true" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark cursor-not-allowed transition duration-[.3s]">
                                 Community
+                                <span class="absolute -top-2 -right-2 bg-red-600 text-white text-md rounded px-2 h-5 flex items-center justify-center">Soon</span>
                             </a>
                         </div>
                     </div>
@@ -823,20 +824,21 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
-                        <li><a href="products.html" class="text-gray-400 hover:text-white transition">Shop All</a></li>
-                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
-                        <li><a href="tracking.html" class="text-gray-400 hover:text-white transition font-semibold">Track Order</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white">Shop All</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                        <li><a href="order-tracking.html" class="text-gray-400 hover:text-white transition font-semibold">Track Order</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="text-lg font-bold mb-4">Order Support</h3>
+                    <h3 class="text-lg font-bold mb-4">Support</h3>
                     <ul class="space-y-2">
-                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition">FAQs</a></li>
-                        <li><a href="shipping.html" class="text-gray-400 hover:text-white transition">Shipping Policy</a></li>
-                        <li><a href="returns.html" class="text-gray-400 hover:text-white transition">Return Policy</a></li>
-                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                      <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="shipping-policy.html" class="text-gray-400 hover:text-white">Shipping Policy</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-white">Returns</a></li>
                     </ul>
                 </div>
                 
@@ -865,221 +867,7 @@
         </div>
     </footer>
 
-    <script>
-        // Mobile menu toggle
-        const mobileMenuBtnTrack = document.getElementById('mobileMenuBtnTrack');
-        const mobileMenuTrack = document.getElementById('mobileMenuTrack');
-        const menuIconTrack = document.getElementById('menuIconTrack');
-        
-        if (mobileMenuBtnTrack && mobileMenuTrack) {
-            mobileMenuBtnTrack.addEventListener('click', () => {
-                mobileMenuTrack.classList.toggle('hidden');
-                if (menuIconTrack) {
-                    if (mobileMenuTrack.classList.contains('hidden')) {
-                        menuIconTrack.className = 'fas fa-bars';
-                    } else {
-                        menuIconTrack.className = 'fas fa-times';
-                    }
-                }
-            });
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', (event) => {
-                if (!mobileMenuTrack.contains(event.target) && 
-                    !mobileMenuBtnTrack.contains(event.target) && 
-                    !mobileMenuTrack.classList.contains('hidden')) {
-                    mobileMenuTrack.classList.add('hidden');
-                    if (menuIconTrack) {
-                        menuIconTrack.className = 'fas fa-bars';
-                    }
-                }
-            });
-            
-            // Close menu when clicking on a link
-            const mobileLinks = mobileMenuTrack.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenuTrack.classList.add('hidden');
-                    if (menuIconTrack) {
-                        menuIconTrack.className = 'fas fa-bars';
-                    }
-                });
-            });
-        }
-
-        // Tracking Form Handling
-        const trackingForm = document.getElementById('trackingForm');
-        const trackingResults = document.getElementById('trackingResults');
-        const noResults = document.getElementById('noResults');
-        const findOrderBtn = document.getElementById('findOrderBtn');
-        const guestTrackLink = document.getElementById('guestTrackLink');
-        const tryAgainBtn = document.getElementById('tryAgainBtn');
-        
-        // Demo tracking data
-        const demoOrders = {
-            'GB-2025-12345': {
-                email: 'demo@example.com',
-                status: 'in-transit',
-                progress: 60,
-                date: 'Dec 15, 2025',
-                delivery: 'Dec 18, 2025',
-                method: 'UPS Ground',
-                tracking: '1Z999AA1234567890'
-            },
-            'GB-2025-67890': {
-                email: 'demo@example.com',
-                status: 'delivered',
-                progress: 100,
-                date: 'Dec 10, 2025',
-                delivery: 'Dec 13, 2025',
-                method: 'FedEx Ground',
-                tracking: '123456789012'
-            },
-            'GB-2025-11223': {
-                email: 'demo@example.com',
-                status: 'processing',
-                progress: 30,
-                date: 'Dec 16, 2025',
-                delivery: 'Dec 20, 2025',
-                method: 'USPS Priority',
-                tracking: '9205590164912345678901'
-            }
-        };
-        
-        if (trackingForm) {
-            trackingForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const orderNumber = document.getElementById('orderNumber').value.trim().toUpperCase();
-                const email = document.getElementById('trackingEmail').value.trim().toLowerCase();
-                
-                // Demo validation - in real app, this would call your backend
-                if (demoOrders[orderNumber] && email.includes('@')) {
-                    // Show tracking results
-                    trackingResults.classList.remove('hidden');
-                    noResults.classList.add('hidden');
-                    
-                    // Update demo data
-                    const order = demoOrders[orderNumber];
-                    document.getElementById('demoOrderNumber').textContent = orderNumber;
-                    document.getElementById('demoOrderDate').textContent = order.date;
-                    document.getElementById('demoDeliveryDate').textContent = order.delivery;
-                    document.getElementById('demoShippingMethod').textContent = order.method;
-                    document.getElementById('demoTrackingNumber').textContent = order.tracking;
-                    document.getElementById('progressPercent').textContent = order.progress + '%';
-                    document.getElementById('progressFill').style.width = order.progress + '%';
-                    
-                    // Scroll to results
-                    trackingResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                } else {
-                    // Show no results
-                    trackingResults.classList.add('hidden');
-                    noResults.classList.remove('hidden');
-                    
-                    // Scroll to no results
-                    noResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        }
-        
-        // Find order number button
-        if (findOrderBtn) {
-            findOrderBtn.addEventListener('click', function() {
-                alert('Check your email for your order confirmation. Your order number starts with "GB-" followed by the year and a 5-digit number (e.g., GB-2025-12345).');
-            });
-        }
-        
-        // Guest tracking link
-        if (guestTrackLink) {
-            guestTrackLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Pre-fill demo data for testing
-                document.getElementById('orderNumber').value = 'GB-2025-12345';
-                document.getElementById('trackingEmail').value = 'demo@example.com';
-                // Trigger form submission
-                trackingForm.dispatchEvent(new Event('submit'));
-            });
-        }
-        
-        // Try again button
-        if (tryAgainBtn) {
-            tryAgainBtn.addEventListener('click', function() {
-                noResults.classList.add('hidden');
-                document.getElementById('orderNumber').value = '';
-                document.getElementById('trackingEmail').value = '';
-                document.getElementById('orderNumber').focus();
-            });
-        }
-        
-        // Print tracking button
-        const printTrackingBtn = document.getElementById('printTracking');
-        if (printTrackingBtn) {
-            printTrackingBtn.addEventListener('click', function() {
-                window.print();
-            });
-        }
-        
-        // Share tracking button
-        const shareTrackingBtn = document.getElementById('shareTracking');
-        if (shareTrackingBtn) {
-            shareTrackingBtn.addEventListener('click', function() {
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'GearBox Order Tracking',
-                        text: `Track my GearBox Auto Parts order ${document.getElementById('demoOrderNumber').textContent}`,
-                        url: window.location.href,
-                    })
-                    .catch(console.error);
-                } else {
-                    // Fallback for browsers without Web Share API
-                    const trackingUrl = window.location.href;
-                    navigator.clipboard.writeText(trackingUrl).then(() => {
-                        alert('Tracking link copied to clipboard!');
-                    });
-                }
-            });
-        }
-        
-        // Copy tracking number function
-        window.copyTrackingNumber = function (button) {
-      const trackingNum =
-        document.getElementById('demoTrackingNumber').textContent;
-
-      navigator.clipboard.writeText(trackingNum).then(() => {
-        const originalText = button.innerHTML;
-
-        button.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
-
-        setTimeout(() => {
-          button.innerHTML = originalText;
-    }, 2000);
-  });
-};
-
-        
-        // Simulate live updates
-        function simulateLiveUpdate() {
-            setTimeout(() => {
-                const progressFill = document.getElementById('progressFill');
-                const progressPercent = document.getElementById('progressPercent');
-                
-                if (progressFill && progressPercent) {
-                    const currentWidth = parseInt(progressFill.style.width);
-                    if (currentWidth < 100) {
-                        const newWidth = Math.min(currentWidth + 5, 100);
-                        progressFill.style.width = newWidth + '%';
-                        progressPercent.textContent = newWidth + '%';
-                    }
-                }
-            }, 10000); // Update every 10 seconds
-        }
-        
-        // Start simulation when page loads
-        window.addEventListener('load', simulateLiveUpdate);
-        
-        // Auto-focus search field
-        document.getElementById('orderNumber')?.focus();
-    </script>
+    <script src="order-tracking.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

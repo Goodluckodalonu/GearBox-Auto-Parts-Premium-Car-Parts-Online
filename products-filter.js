@@ -781,7 +781,7 @@ createGridProductCard(product) {
       // Reset all filters
       this.filters = {
           categories: [],
-          priceRange: { min: 0, max: 500 },
+          priceRange: { min: 0, max: 1000 },
           brands: [],
           ratings: [],
           inStock: false,

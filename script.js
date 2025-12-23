@@ -3,6 +3,40 @@ const featuredProductsContainer = document.getElementById('featured-products');
 const cartCountElement = document.getElementById('cart-count');
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
+const counterContainer = document.getElementById('counter-container')
+const counters = document.querySelectorAll('#counter-container span')
+let isActivated = false;
+
+if (counterContainer) {
+  window.addEventListener('scroll', () => {
+    const triggerPoint = counterContainer.getBoundingClientRect().top;
+    const screenHeight = window.innerHeight;
+
+    if (triggerPoint < screenHeight && !isActivated) {
+      counters.forEach(counter => {
+        let count = 0;
+        const target = Number(counter.dataset.count);
+
+        const updateCount = () => {
+          const increment = Math.ceil(target / 300);
+
+          if (count < target) {
+            count += increment;
+            counter.textContent = count;
+            requestAnimationFrame(updateCount);
+          } else {
+            counter.textContent = target;
+          }
+        };
+
+        updateCount();
+      });
+
+      isActivated = true;
+    }
+  });
+}
+
 
 
 // Cart state
@@ -47,8 +81,17 @@ async function fetchProducts() {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+        const isMobile = window.matchMedia('(max-width:640px)').matches;
+        const limit = isMobile ? 6 : 12;
+
+        console.log('products:', limit)
+
         const data = await response.json();
-        return data.products || [];
+        const products = data.products || [];
+
+        
+
+        return products.slice(0, limit);
     } catch (error) {
         console.error('Error loading products:', error);
         showNotification('Error loading products', 'error');
@@ -78,7 +121,7 @@ async function displayFeaturedProducts() {
             return;
         }
 
-        const featuredProducts = products.filter(product => product.featured);
+        const featuredProducts = products;
 
         // Clear loading skeleton
         featuredProductsContainer.innerHTML = '';

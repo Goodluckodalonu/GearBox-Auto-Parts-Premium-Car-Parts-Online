@@ -32,24 +32,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Add this style for mobile menu transitions -->
-    <style>
-        #mobileMenuAbout {
-            transition: all 0.3s ease-in-out;
-        }
-        
-        #mobileMenuAbout.hidden {
-            opacity: 0;
-            transform: translateY(-10px);
-            pointer-events: none;
-        }
-        
-        #mobileMenuAbout:not(.hidden) {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
 </head>
 <body class="font-sans bg-gray-50">
     <!-- Navigation -->
@@ -74,8 +56,9 @@
                 
                 <div class="flex items-center space-x-4">
                     <div class="hidden md:flex">
-                        <a href="#" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark transition duration-[.3s]">
+                        <a role="link" aria-disabled="true" class="relative bg-primary text-white text-sm p-[10px] rounded-md hover:bg-dark cursor-not-allowed transition duration-[.3s]">
                             Community
+                            <span class="absolute -top-2 -right-2 bg-red-600 text-white text-md rounded px-2 h-5 flex items-center justify-center">Soon</span>
                         </a>
                     </div>
                     
@@ -109,9 +92,9 @@
                         <a href="about.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">About</a>
                         <a href="contact.html" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition">Contact</a>
                         <div class="pt-2 border-t">
-                            <a href="#" class="font-medium py-2 px-3 hover:bg-gray-100 rounded-lg transition flex items-center">
-                                <i class="fas fa-users mr-2 text-primary"></i>
+                            <a role="link" aria-disabled="true" class="relative cursor-default opacity-50 bg-[#5b5b5b] text-white text-sm p-[10px] rounded-md hover:bg-dark cursor-not-allowed transition duration-[.3s]">
                                 Community
+                                <span class="absolute -top-2 -right-2 bg-red-600 text-white text-md rounded px-2 h-5 flex items-center justify-center">Soon</span>
                             </a>
                         </div>
                     </div>
@@ -120,7 +103,7 @@
         </nav>
     </header>
 
-    <!-- Rest of your content remains exactly the same -->
+    <!-- Rest of the content remains exactly the same -->
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
         <!-- Hero Section -->
@@ -136,7 +119,7 @@
             <div>
                 <h2 class="text-3xl font-bold mb-6">Our Story</h2>
                 <p class="text-gray-600 mb-4">
-                    GearBox was founded in 2024 by a team of automotive engineers and racing enthusiasts who were frustrated with the lack of quality parts available to everyday car lovers. What started as a small garage operation has grown into a leading online destination for premium auto parts.
+                    GearBox was founded in 2020 by a team of automotive engineers and racing enthusiasts who were frustrated with the lack of quality parts available to everyday car lovers. What started as a small garage operation has grown into a leading online destination for premium auto parts.
                 </p>
                 <p class="text-gray-600 mb-4">
                     Our mission is simple: to provide car enthusiasts, professional mechanics, and DIYers with access to high-performance parts that don't break the bank. We believe everyone deserves to experience the thrill of a well-tuned machine.
@@ -183,10 +166,10 @@
         </div>
 
         <!-- Stats Section -->
-        <div class="bg-primary text-white rounded-2xl p-8 mb-16">
+        <div id="counter-container" class="bg-primary text-white rounded-2xl p-8 mb-16">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div>
-                    <div class="text-4xl font-bold mb-2">1000+</div>
+                    <div class="text-4xl font-bold mb-2"><span data-count="1000">0</span>+</div>
                     <p class="opacity-90">Products Available</p>
                 </div>
                 <div>
@@ -194,11 +177,11 @@
                     <p class="opacity-90">Support Available</p>
                 </div>
                 <div>
-                    <div class="text-4xl font-bold mb-2">50+</div>
+                    <div class="text-4xl font-bold mb-2"><span data-count="50">0</span>+</div>
                     <p class="opacity-90">Brand Partners</p>
                 </div>
                 <div>
-                    <div class="text-4xl font-bold mb-2">48h</div>
+                    <div class="text-4xl font-bold mb-2"><span data-count="48">0</span>h</div>
                     <p class="opacity-90">Avg. Shipping Time</p>
                 </div>
             </div>
@@ -212,7 +195,7 @@
                     <div class="w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 border-primary/20">
                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
                              alt="Alex Morgan" 
-                             class="w-full h-full object-cover">
+                             class="w-full object-cover">
                     </div>
                     <h3 class="font-bold text-lg">Alex Morgan</h3>
                     <p class="text-gray-600">Founder & CEO</p>
@@ -221,9 +204,9 @@
                 
                 <div class="text-center">
                     <div class="w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 border-primary/20">
-                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                        <img src="https://media.istockphoto.com/id/1317784597/photo/vertical-portrait-of-mature-50-years-asian-business-woman-on-grey-background.jpg?s=612x612&w=0&k=20&c=4bCCytm55vOSNNr_MVuu52QT2Pcx9d8rwTGNMPO9dUw=" 
                              alt="Sarah Chen" 
-                             class="w-full h-full object-cover">
+                             class="w-full object-cover">
                     </div>
                     <h3 class="font-bold text-lg">Sarah Chen</h3>
                     <p class="text-gray-600">Technical Director</p>
@@ -234,7 +217,7 @@
                     <div class="w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 border-primary/20">
                         <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
                              alt="Marcus Johnson" 
-                             class="w-full h-full object-cover">
+                             class="w-full object-cover">
                     </div>
                     <h3 class="font-bold text-lg">Marcus Johnson</h3>
                     <p class="text-gray-600">Operations Manager</p>
@@ -285,6 +268,7 @@
                         <li><a href="products.html" class="text-gray-400 hover:text-white">Shop All</a></li>
                         <li><a href="about.html" class="text-gray-400 hover:text-white">About Us</a></li>
                         <li><a href="contact.html" class="text-gray-400 hover:text-white">Contact</a></li>
+                        <li><a href="order-tracking.html" class="text-gray-400 hover:text-white transition font-semibold">Track Order</a></li>
                     </ul>
                 </div>
                 

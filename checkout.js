@@ -860,7 +860,7 @@ updateNavigationButtons() {
       // Calculate total
       orderData.totals.total = orderData.totals.subtotal + orderData.totals.shipping + orderData.totals.tax;
       
-      // Save order to localStorage (in real app, send to server)
+      // Save order to localStorage
       const orders = JSON.parse(localStorage.getItem('orders')) || [];
       orders.push(orderData);
       localStorage.setItem('orders', JSON.stringify(orders));
